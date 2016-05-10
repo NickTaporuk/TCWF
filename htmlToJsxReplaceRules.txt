@@ -1,0 +1,11 @@
+1. Replace for elements with one class or id
+"tcwlw_([^" ]+)"
+{cn('$1')}
+
+2. Replace for elements with two classes
+"tcwlw_([^ ]+) tcwlw_([^ "]+)"
+{cn(['$1', '$2'])}
+
+3. Replace for elements with three classes
+"tcwlw_([^ ]+) tcwlw_([^ ]+) tcwlw_([^ "]+)"
+{cn(['$1', '$2', '$3'])}

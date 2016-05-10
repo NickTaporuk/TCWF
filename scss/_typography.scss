@@ -1,0 +1,295 @@
+/***************************************
+
+    #TYPOGRAPHY
+
+****************************************/
+
+#tcwlw_root {
+	font-size: 16px !important; // Setting root font-size for out widget
+}
+
+#tcwlw_widget,
+#tcwlw_widget_outer {
+	font-family: $fontSans;
+	font-size: 10px; //62.5%;
+	line-height: 1.5;
+	color: $grayDarkest;
+
+	* {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	a {
+		text-decoration: underline;
+		@include font-size($baseFontSize);
+		color: $linkColor;
+		@include transition();
+
+		//&:focus,
+		&:hover {
+			color: lighten($linkColor, 10%);
+			text-decoration: none;
+		}
+		
+		&:active {
+			color: darken($linkColor, 10%);
+		}
+	}
+
+	p a,
+	li a {
+		@include font-size(1);
+	}
+
+	h1, h2, h3, h4, h5, h6, p, li, th, td {
+		text-rendering: optimizeLegibility;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: $fontSans;
+		font-weight: $light;
+		line-height: 1.25;
+		margin: 0;
+		@include padding(0, 0, 0.5);
+		
+		a {
+			@include font-size(1);
+		}
+	}
+
+	h1 {
+		@include font-size($baseFontSize*2.75);
+		@include padding-bottom($baseSpacing/2.75);
+	}
+
+	li h1 {
+		@include font-size(2.75);
+	}
+
+	h2 {
+		@include font-size($baseFontSize*2.25);
+		@include padding-bottom($baseSpacing/6);
+	}
+
+	li h2 {
+		@include font-size(2.25);
+	}
+
+	h3 {
+		@include font-size($baseFontSize*1.75);
+	}
+
+	li h3 {
+		@include font-size(1.75);
+	}
+
+	h4 {
+		@include font-size($baseFontSize*1.5);
+	}
+
+	li h4 {
+		@include font-size(1.5);
+	}
+
+	h5 {
+		@include font-size($baseFontSize*1.25);
+	}
+
+	li h5 {
+		@include font-size(1.25);
+	}
+
+	h6 {
+		@include font-size($baseFontSize);
+	}
+
+	li h6 {
+		@include font-size($baseFontSize*0.75);
+	}
+
+	p, ul, ol {
+		@include margin(0, 0, $baseSpacing/1.5);
+	}
+
+	p, li {
+		@include font-size($baseFontSize);
+		max-width: 50em;
+	}
+
+	p {
+		&.tcwlw_textcenter {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+
+	ul,
+	ol {
+		@include padding(0, 0, 0, $baseSpacing);
+	}
+
+	li li {
+		@include font-size(1);
+	}
+
+	em {
+		font-style: italic;
+	}
+
+	img, iframe {
+		width: auto;
+	  	max-width: 100%;
+	}
+
+	img {
+		height: auto;
+	}
+
+	table {
+		background: none;
+		@include font-size($baseFontSize);
+		color: $grayDarkest;
+		width: 100%;
+		@include margin-bottom($baseSpacing);
+		border: none;
+		text-align: center;
+
+		td,
+		th {
+			@include padding($baseSpacing/3);
+			text-align: left;
+
+			&:last-child {
+				text-align: right;
+			}
+
+			a {
+				@include font-size(1);
+			}
+		}
+
+		th {
+			background: $grayLighter;
+			font-weight: $bold;
+		}
+
+		td {
+			background: none;
+		}
+
+		tbody,
+		tfoot {
+			tr {
+				&.tcwlw_light.tcwlw_light {
+					background: $grayLighter;
+
+					td {
+						color: $grayDarkest;
+					}
+				}
+
+				&.tcwlw_dark.tcwlw_dark {
+					background: $grayDarker;
+
+					td {
+						color: white;
+					}
+				}
+			}
+		}
+
+		tbody {
+			tr {
+				&:nth-child(even) {
+					background: $grayLightest;
+				}
+			}
+		}
+
+		tfoot {
+			background: $grayDarker;
+			@include font-size(1.25);
+
+			td {
+				font-weight: bold;
+				color: white;
+
+				a {
+					color: white;
+				}
+			}
+		}
+	}
+
+	.tcwlw_nested_wrapper {
+		padding: 0;
+
+		table {
+			@include font-size(1);
+		}
+	}
+
+	.tcwlw_table_wrapper {
+		position: relative;
+		width: 100%;
+		// @include max-width(78);
+		@include margin-bottom($baseSpacing);
+		margin-left: auto;
+		margin-right: auto;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+
+		table {
+			min-width: 250px;
+			margin-bottom: 0;
+		}
+	}
+
+	// Faux Media
+
+	@include tireconnect-width(small) {
+		h1 {
+			@include font-size($baseFontSize*2.25);
+		}
+
+		li h1 {
+			@include font-size(2.25);
+		}
+
+		h2 {
+			@include font-size($baseFontSize*1.75);
+		}
+
+		li h2 {
+			@include font-size(1.75);
+		}
+	}
+
+	// Media
+
+	@include respond-to(smaller-screen) {
+		h1 {
+			@include font-size($baseFontSize*2.25);
+		}
+
+		li h1 {
+			@include font-size(2.25);
+		}
+
+		h2 {
+			@include font-size($baseFontSize*1.75);
+		}
+
+		li h2 {
+			@include font-size(1.75);
+		}
+
+		table {
+			td,
+			th {
+				@include padding($baseSpacing/4);
+			}
+		}
+	}
+}

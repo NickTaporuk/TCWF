@@ -1,0 +1,37 @@
+{
+  "name": "tcwidget",
+  "version": "1.0.0",
+  "description": "Tireconnect Widget",
+  "main": "js/widget.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+
+    "build": "babel --presets react jsx --out-dir js/components",
+    "build-css": "node-sass --output-style compressed --source-map true  scss/ --output css/",
+
+    "watch-jsx": "babel --presets react jsx --watch --out-dir js/components",
+    "watch-scss": "node-sass --watch --output-style compressed --source-map true  scss/ --output css/",
+
+    "compile-js": "r.js -o app.build.js",
+    "compile-js-win": "r.js.cmd -o app.build.js",
+
+    "install": "bower install && npm run build && npm run build-css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/tireconnect/tcwidgetresponsive.git"
+  },
+  "author": "mromanp",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/tireconnect/tcwidgetresponsive#readme",
+  "dependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-preset-react": "^6.5.0",
+    "r.js": "^1.0.3",
+    "bower": "^1.7.8",
+    "node-sass": "^3.7.0"
+  },
+  "devDependencies": {
+    "requirejs": "^2.1.22"
+  }
+}

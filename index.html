@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>WL wiget</title>
+    <script src="/js/widget.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+
+    <script>
+      var pathParts = window.location.pathname.split('/');
+      var isSA = pathParts[1] && pathParts[1] == 'instore';
+      var apiKey = pathParts[2] ? pathParts[2] : '';
+
+      TCWidget.init({
+          apikey: apiKey,
+          container: 'content',
+          sa: isSA,
+          scriptPlace: 'http://yadro.wlwidget.savetopic.net',
+          apiBaseUrl: 'https://dev.tireconnect.ca/api2.php/'
+      });
+    </script>
+  </body>
+</html>

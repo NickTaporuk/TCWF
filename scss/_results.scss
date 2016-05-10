@@ -1,0 +1,1289 @@
+/***************************************
+
+    #RESULTS
+
+****************************************/
+
+#tcwlw_widget {
+
+	// Results page layout
+
+	.tcwlw_results_wrapper {
+		clear: both;
+		width: 100%;
+		@include margin-top(-$baseSpacing/4);
+	}
+
+	.tcwlw_results_title {
+		@include margin(-$baseSpacing/2, 0, 0);
+	}
+
+	.tcwlw_results_title_text,
+	.tcwlw_results_query {
+		max-width: none;
+		display: block;
+		text-align: center;
+	}
+
+	.tcwlw_results_title_text {
+		margin: 0;
+		padding: 0;
+	}
+
+	.tcwlw_results_query {
+		font-weight: normal;
+		@include margin(0, 0, $baseSpacing/4);
+
+		> span {
+			@include margin(0, 0.4);
+			display: inline-block;
+			@include ie7-inline-block();
+
+			&[class*="tcwlw_results_query_"] {
+				font-weight: bold;
+			}
+		}
+	}
+
+	// Filters
+
+	.tcwlw_results_filters {
+		clear: both;
+		@include margin-bottom($baseSpacing/1.5);
+		@include padding($baseSpacing/2.5, $baseSpacing/2);
+
+		.tcwlw_filter_field {
+			width: 50%;
+			min-width: 174px;
+			margin-left: -4px;;
+			@include margin-top(0.5);
+			@include margin-bottom(0.75);
+			@include padding-left(1.25);
+			display: inline-block;
+			@include ie7-inline-block();
+			vertical-align: middle;
+
+			select {
+				margin: 0;
+			}
+		}
+
+		#tcwlw_filter_results_filter {
+			option {
+				display: none;
+
+				&.tcwlw_filter_value {
+					display: block;
+				}
+
+				&:checked,
+				&[selected] {
+					background: none !important;
+				}
+			}
+		}
+
+		// Faux Media
+
+		@include tireconnect-width(tiny) {
+			.tcwlw_filter_field {
+				width: 100%;
+				min-width: 0;
+				margin-left: 0;
+				@include margin-bottom(1.25);
+				padding-left: 0;
+				display: block;
+			}
+		}
+
+		// Media
+
+		@include respond-to(smaller-screen) {
+			.tcwlw_filter_field {
+				width: 100%;
+				min-width: 0;
+				margin-left: 0;
+				@include margin-bottom(1.25);
+				padding-left: 0;
+				display: block;
+			}
+		}
+	}
+
+	// Brands
+
+	.tcwlw_filters {
+		position: relative;
+		width: 100%;
+
+		.tcwlw_filters_wrapper {
+			width: auto;
+			position: relative;
+			margin-left: -4px;
+			@include margin-right($baseSpacing/2);
+			padding-left: 4px;
+			display: inline-block;
+			@include ie7-inline-block();
+		}
+
+		.tcwlw_filters_title {
+			@include padding-bottom($baseSpacing/4);
+
+			> span {
+				@include margin-top($baseSpacing/10);
+				display: none;
+			}
+
+			.tcwlw_filters_toggle {
+				@include font-size(0.6675);
+				@include margin-left(-0.2);
+				display: inline-block;
+			}
+
+			.tcwlw_brand_btn_light {
+				@include font-size(0.5835);
+				width: 100%;
+				@include max-width(19);
+				margin: 0 auto;
+			}
+		}
+
+		.tcwlw_filters_list {
+			@include box();
+			position: absolute;
+			top: 92%;
+			left: -5px;
+			@include width(22);
+			max-height: 296px;
+			@include padding($baseSpacing/2, $baseSpacing/2, $baseSpacing/3);
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+			z-index: $zindexTooltip;
+			text-align: left;
+
+			&.tcwlw_toggle_hidden {
+				display: none;
+			}
+
+			li {
+				display: block;
+			}
+
+			&.tcwlw_top_direction {
+				top: auto;
+				bottom: 70%;
+			}
+		}
+
+		.tcwlw_filters_all {
+			@include padding-bottom($baseSpacing/2.5);
+			border-bottom: 1px solid $grayLighter;
+		}
+
+		// Faux Media
+
+		@include tireconnect-width(large) {
+			float: left;
+			width: 27%;
+			padding-right: 3%;
+
+			.tcwlw_filters_wrapper {
+				width: 100%;
+				margin-left: 0;
+				margin-right: 0;
+				padding-left: 0;
+				display: block;
+			}
+
+			.tcwlw_filters_title {
+				> span {
+					display: block;
+				}
+
+				.tcwlw_filters_toggle {
+					display: none;
+				}
+			}
+
+			.tcwlw_filters_list {
+				position: static;
+				max-height: none;
+				padding: 0;
+				border: none;
+				@include width(27);
+				@include box-shadow(none);
+
+				&.tcwlw_toggle_hidden {
+					display: block;
+				}
+			}
+		}
+
+		@include tireconnect-width(medium) {
+			float: none;
+			width: 100%;
+			padding-right: 0;
+
+			.tcwlw_filters_wrapper {
+				width: auto;
+				margin-left: -4px;
+				@include margin-right($baseSpacing/2);
+				padding-left: 4px;
+				display: inline-block;
+				@include ie7-inline-block();
+			}
+
+			.tcwlw_filters_title {
+				> span {
+					display: none;
+				}
+
+				.tcwlw_filters_toggle {
+					display: inline-block;
+					@include ie7-inline-block();
+				}
+			}
+
+			.tcwlw_filters_list {
+				@include box();
+				position: absolute;
+				max-height: 296px;
+				@include width(29);
+				@include padding($baseSpacing/2, $baseSpacing/2, $baseSpacing/3);
+
+				&.tcwlw_toggle_hidden {
+					display: none;
+				}
+			}
+		}
+
+		@include tireconnect-width(tiny) {
+			.tcwlw_filters_wrapper {
+				width: 100%;
+			}
+		}
+	}
+
+	// Various tire items
+
+	ul.tcwlw_result_specs_list {
+		padding: 0;
+		list-style: none;
+
+		li {
+			@include font-size(1);
+			width: 50%;
+			margin-left: -2px;
+			margin-right: -2px;
+			@include padding(0, 0.8, 0, 0.2);
+			display: inline-block;
+			@include ie7-inline-block();
+			vertical-align: top;
+		}
+	}
+
+	.tcwlw_result_brand_logo,
+	.tcwlw_result_tire {
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+
+	.tcwlw_result_brand_logo {
+		width: auto;
+		max-width: 140px;
+		// max-height: 20px;
+		@include margin-bottom(0.2);
+	}
+
+	.tcwlw_result_tire_wrapper {
+		position: relative;
+		width: 100%;
+		@include margin-bottom(0.5);
+		@include padding($baseSpacing/4);
+		border: 1px solid $grayLighter;
+	}
+
+	.tcwlw_result_tire {
+		width: auto;
+		max-width: 100%;
+		max-height: 140px;
+	}
+
+	.tcwlw_tire_enlarge {
+		background: none;
+		@include font-size(1.4);
+		line-height: 1;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		@include padding(0.2);
+		border: none;
+		display: block;
+		z-index: 10;
+
+		i {
+			line-height: 1;
+			color: inherit;
+			margin: 0;
+			vertical-align: middle;
+		}
+	}
+
+	.tcwlw_result_rebate,
+	.tcwlw_result_original_equip {	
+		@include font-size(0.875);
+		font-weight: bold;
+		color: white;
+		@include margin-bottom(0.5);
+		@include padding($baseSpacing/6, $baseSpacing/4);
+		display: block;
+		text-align: center;
+
+		i {	
+			font-size: 120%;
+			line-height: 1;
+			color: inherit;
+			vertical-align: -3px;
+		}
+
+		a {
+			color: white;
+
+			&:hover,
+			&:focus {
+				color: #f2f2f2;
+			}
+		}
+
+		.tcwlw_toggle {
+			display: block;
+		}
+	}
+
+	.tcwlw_result_rebate {
+		background: $green;
+
+		i {
+			background: $green;
+		}
+	}
+
+	.tcwlw_result_original_equip {
+		background: $orange;
+
+		i {
+			background: $orange;
+		}
+	}
+
+	.tcwlw_result_select_actions {
+		clear: both;
+		width: 100%;
+	}
+
+	.tcwlw_result_price {
+		position: relative;
+		@include margin-bottom(1.2);
+		@include padding-bottom(1);
+		@include clearfix();
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+
+	.tcwlw_staggered_label {
+		@include font-size(0.875);
+		@include line-height(2);
+		text-transform: uppercase;
+		@include padding-bottom(0.4);
+		display: table-row;
+	}
+
+	.tcwlw_qty,
+	.tcwlw_price {
+		margin: 0;
+		padding-bottom: 0;
+	}
+
+	.tcwlw_price {
+		@include font-size(1.4);
+		color: $primaryColor;
+	}
+
+	.tcwlw_qty {
+		@include font-size(1.25);
+		font-weight: normal;
+
+		.tcwlw_qty_label {
+			@include margin(0, 0.5, 0.5, 0);
+			display: inline-block;
+			@include ie7-inline-block();
+		}
+
+		select {
+			@include width(3.25);
+			@include height(2.4);
+			margin: 0;
+			display: inline-block;
+			@include ie7-inline-block();
+			vertical-align: middle;
+		}
+	}
+
+	.tcwlw_select_btn.tcwlw_select_btn {
+		@include font-size(1);
+		clear: both;
+		width: 100%;
+		max-width: 350px;
+		float: right;
+
+		i {
+			font-size: 130%;
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+
+
+	// Results List
+
+	.tcwlw_results {
+		width: 100%;
+
+		.tcwlw_paginator {
+			float: left;
+		}
+
+		.tcwlw_compare_btn_wrapper {
+			float: right;
+			@include margin-bottom($baseSpacing/2.5);
+			@include padding-left($baseSpacing/4);
+		}
+
+		.tcwlw_compare_btn,
+		.tcwlw_compare_number {
+			display: inline-block;
+			@include ie7-inline-block();
+			vertical-align: middle;
+		}
+
+		.tcwlw_compare_btn {
+			@include margin(0, 0, 0, $baseSpacing/4);
+
+			i {
+				font-size: 145%;
+				vertical-align: -4px;
+			}
+		}
+
+		.tcwlw_compare_number {
+			background: $grayLightest;
+			@include font-size($baseFontSize);
+			font-weight: bold;
+			@include line-height(2);
+			text-indent: -1px;
+			@include width(2);
+			@include height(2);
+			@include rounded(50%);
+			text-align: center;
+		}
+
+		.tcwlw_results_list {
+			padding: 0;
+			list-style: none;
+			margin: inherit;
+		}
+
+		.tcwlw_result {
+			background: white;
+			position: relative;
+			max-width: none;
+			@include margin-bottom($baseSpacing/2.5);
+			@include padding($baseSpacing/4, $baseSpacing/4, 0);
+			border-width: 1px;
+			border-style: solid;
+			display: block;
+
+			&:not(.tcwlw_result_featured) {
+				border-color: $grayLight;
+			}
+
+			p,
+			li {
+				@include font-size(0.875);
+			}
+
+			p {
+				@include margin-bottom($baseSpacing/2);
+			}
+		}
+
+		.tcwlw_result_header,
+		.tcwlw_result_body {
+			@include clearfix();
+		}
+
+		// .tcwlw_result_header {
+		// 	@include padding-bottom($baseSpacing/4);
+		// }
+
+		.tcwlw_result_title,
+		.tcwlw_result_compare {
+			float: left;
+		}
+
+		.tcwlw_result_title {
+			@include font-size(1.25);
+			font-weight: bold;
+			// width: 65%;
+			@include margin-top(-0.2);
+			@include padding-right(1);
+		}
+
+		.tcwlw_result_subtitle {
+			@include font-size(0.75);
+			font-weight: normal;
+			color: $grayDarker;
+			@include padding-top(0.1);
+			display: block;
+		}
+
+		.tcwlw_result_type {
+			@include margin-right(0.6);
+			@include padding-right(0.6);
+			border-right: 1px solid $grayLighter;
+		}
+
+		.tcwlw_warranty {
+			white-space: nowrap;
+			display: inline-block;
+		}
+
+		.tcwlw_result_compare {
+			width: 35%;
+			text-align: right;
+		}
+
+		.tcwlw_result_left,
+		.tcwlw_result_right {
+			float: left;
+		}
+
+		.tcwlw_result_left {
+			width: 30%;
+			@include padding-bottom(0.3);
+			// @include margin-top(-0.6);
+			padding-right: 3%;
+			text-align: center;
+		}
+
+		.tcwlw_result_right {
+			width: 70%;
+			// @include margin-top(-$baseSpacing/6);
+			padding-left: 1%;
+			@include padding-bottom(0.5);
+		}
+
+		.tcwlw_result_rating {
+			i {
+				@include font-size(1.35);
+				line-height: 1;
+				color: #e7b900;
+				@include margin($baseSpacing/8, 0);
+				display: inline-block;
+				@include ie7-inline-block();
+				vertical-align: middle;
+			}
+
+			.tcwlw_result_rating_link {
+				display: block;
+			}
+		}
+
+		.tcwlw_result_intro {
+			@include margin-bottom($baseSpacing/3);
+			overflow: hidden;
+
+			p {
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+
+		.tcwlw_tab.tcwlw_tab {
+			@include font-size(1);
+		}
+
+		.tcwlw_stock_tab {
+			float: right;
+			margin-right: 0;
+
+			a {
+				background: $orangeLight;
+				color: white;
+
+				&:hover {
+					color: darken(white, 10%);
+				}
+
+				&[aria-selected="false"] {
+					border-color: $orangeLight;
+				}
+
+				&[aria-selected="true"] {
+					color: $orangeLight;
+				}
+			}
+
+			&.tcwlw_in_stock {
+				a {
+					background: $green;
+
+					&[aria-selected="false"] {
+						border-color: $green;
+					}
+
+					&[aria-selected="true"] {
+						color: $green;
+						background: white;
+					}
+				}
+			}
+		}
+
+		.tcwlw_tab_cont.tcwlw_tab_cont {
+			position: relative;
+			max-height: 375px;
+			@include padding($baseSpacing/2.375, $baseSpacing/3);
+			@include box-shadow(inset 0 -10px 8px -4px white);
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+
+			p,
+			li {
+				@include font-size(0.875);
+				@include line-height(1.6);
+				margin-bottom: 0;
+    			list-style-position: inherit;
+			}
+
+			p,
+			ul,
+			ol {
+				@include margin-bottom($baseSpacing/2);
+
+				&:last-child {
+					margin: inherit;
+					margin-bottom: 0;
+				}
+			}
+
+			ul,
+			ol {
+				@include padding-left($baseSpacing/2);
+			}
+
+			ul {
+				list-style: disc;
+			}
+
+			ul.tcwlw_result_specs_list {
+				padding: 0;
+			}
+
+			.tcwlw_result_stock_info {
+				width: auto;
+				margin: 0;
+				@include font-size(1);
+
+				td {
+					text-align: left;
+					padding: 0;
+				}
+
+				ul, li {
+					list-style: none;
+					padding: 0;
+				}
+
+				td:first-child {
+					@include padding-right(0.5);
+					+ td {
+						a {
+							display: none;
+						}
+					}
+				}
+
+				@include tireconnect-width(tiny) {
+					&.tcwlw_with_branches {
+						td:first-child {
+							display: none;
+							padding: 0;
+
+							+ td {
+								a {
+									display: inline;
+								}	
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Reviews tab
+
+		.tcwlw_result_reviews_heading {
+			@include font-size(1);
+		}
+
+		.tcwlw_result_review {
+			@include margin-bottom($baseSpacing/2);
+			@include padding-bottom($baseSpacing/2);
+			border-bottom: 1px solid $grayLighter;
+			overflow: hidden;
+
+			&:last-child {
+				@include margin-bottom($baseSpacing/4);
+				padding-bottom: 0;
+				border-bottom: none;
+			}
+
+			p {
+				@include margin-bottom($baseSpacing/4);
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+
+			.tcwlw_result_review_title,
+			.tcwlw_result_rating {
+				display: inline;
+			}
+
+			.tcwlw_result_review_title {
+				@include font-size(1.125);
+				font-weight: bold;
+				@include margin-right($baseSpacing/8);
+				@include padding-bottom($baseSpacing/8);
+				vertical-align: middle;
+			}
+
+			.tcwlw_result_rating {
+				@include margin-left(-0.1);
+				@include padding-bottom($baseSpacing/6);
+				white-space: nowrap;
+
+				i {
+					@include margin(0.1, 0);
+				}
+			}
+
+			.tcwlw_result_review_date {
+				@include font-size(0.875);
+				font-style: italic;
+				@include padding-bottom($baseSpacing/8);
+				display: block;
+			}
+		}
+
+		// Stock tab
+		.tcwlw_stock_suppliers {
+			li {
+				a {
+					@include margin-right(1);
+				}
+
+				.tcwlw_btn_small {
+					@include padding(0.4);
+					margin-right: 0; 
+				}
+			}
+		}
+
+		// Price & QTY info
+
+		.tcwlw_result_select_actions {
+			width: 100%;
+			@include margin-bottom($baseSpacing/3);
+			@include padding($baseSpacing/4, $baseSpacing/3);
+			border: 1px solid $grayLighter;
+			display: table;
+		}
+
+		.tcwlw_result_price_wrapper,
+		.tcwlw_select_btn_wrapper {
+			display: table-cell;
+		}
+
+		.tcwlw_result_price_wrapper {
+			width: 60%;
+			@include padding-right($baseSpacing/3);
+			border-right: 1px solid $grayLighter;
+			vertical-align: middle;
+		}
+
+		.tcwlw_select_btn_wrapper {
+			width: 40%;
+			@include padding-left($baseSpacing/3);
+			vertical-align: middle;
+		}
+
+		.tcwlw_result_price {
+			width: auto;
+			margin: 0;
+			display: table;
+		}
+
+		.tcwlw_qty,
+		.tcwlw_price {
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		.tcwlw_qty {
+			// width: 55%;
+			@include padding-right(0.4);
+		}
+
+		// .tcwlw_price {
+		// 	width: 45%;
+		// }
+
+		.tcwlw_select_btn.tcwlw_select_btn {
+			@include font-size(1);
+			float: none;
+			white-space: nowrap;
+			margin: 0;
+			@include padding($baseLineHeight/1.75, $baseLineHeight/2);
+		}
+
+
+		// Variations for "featured" results
+
+		.tcwlw_result_featured {
+			border-width: 3px;
+			@include box-shadow();
+			counter-increment: featured-counter;
+
+			&:after {
+				content: counter(featured-counter);
+				background: $primaryColor;
+				@include font-size($baseFontSize);
+				font-weight: bold;
+				line-height: 2.4;
+				color: white;
+				position: absolute;
+				top: -1px;
+				left: -1px;
+				@include width(2);
+				@include height(2.6);
+				display: block;
+				text-align: center;
+			}
+
+			.tcwlw_result_header {
+				@include padding-left(3.2);
+			}
+
+			.tcwlw_result_title {
+				@include font-size(1.5);
+			}
+		}
+
+
+		// Faux Media
+
+		@include tireconnect-width(large) {
+			float: left;
+			width: 73%;
+		}
+
+		@include tireconnect-width(medium) {
+			float: none;
+			width: 100%;
+		}
+
+		@include tireconnect-width(tiny) {
+			.tcwlw_paginator,
+			.tcwlw_compare_btn {
+				float: none;
+				clear: both;
+			}
+
+			.tcwlw_compare_btn_wrapper {
+				width: 100%;
+				margin-left: auto;
+				margin-right: auto;
+				padding: 0;
+				display: block;
+			}
+
+			.tcwlw_compare_btn {
+				margin-left: 0;
+			}
+
+			.tcwlw_compare_number {
+				display: none;
+			}
+
+			.tcwlw_result {
+				.tcwlw_result_left,
+				.tcwlw_result_right {
+					clear: both;
+					width: 100%;
+					padding-left: 0;
+					padding-right: 0;
+				}
+
+				// .tcwlw_result_left {
+				// 	@include padding-bottom(1);
+				// }
+
+				.tcwlw_result_type,
+				.tcwlw_warranty {
+					@include padding-bottom(0.2);
+					display: block;
+				}
+
+				.tcwlw_result_type {
+					margin-right: 0;
+					padding-right: 0;
+					border: none;
+				}
+			}
+
+			.tcwlw_result_select_actions {
+				max-width: none;
+			}
+
+			.tcwlw_tab_cont {
+				.tcwlw_result_specs_list {
+					li {
+						width: 100%;
+						margin-left: 0;
+						margin-right: 0;
+						display: block;
+					}
+				}
+			}
+
+			.tcwlw_result_select_actions,
+			.tcwlw_result_price_wrapper,
+			.tcwlw_select_btn_wrapper {
+				display: block;
+			}
+
+			.tcwlw_result_price_wrapper,
+			.tcwlw_select_btn_wrapper {
+				width: 100%;
+				padding: 0;
+				border: none;
+			}
+
+			.tcwlw_price {
+				text-align: right;
+			}
+
+			.tcwlw_select_btn_wrapper {
+				@include padding-top($baseSpacing/4);
+			}
+
+			.tcwlw_result_featured.tcwlw_result_featured {
+				@include padding-bottom($baseSpacing/6);
+
+				&:after {
+					line-height: 2.1;
+					left: auto;
+					right: -1px;
+					@include width(1.6);
+					@include height(2.2);
+				}
+
+				.tcwlw_result_header {
+					padding-left: 0;
+					@include padding-right(2);
+				}
+
+				.tcwlw_result_title {
+					@include font-size(1.25);
+				}
+			}
+
+			.tcwlw_select_btn.tcwlw_select_btn {
+				max-width: none;
+			}
+		}
+
+		// Media
+
+		@include respond-to(smaller-screen) {
+			.tcwlw_paginator,
+			.tcwlw_compare_btn {
+				float: none;
+				clear: both;
+			}
+
+			.tcwlw_compare_btn_wrapper {
+				width: 100%;
+				margin-left: auto;
+				margin-right: auto;
+				padding: 0;
+				display: block;
+			}
+
+			.tcwlw_compare_btn {
+				margin-left: 0;
+			}
+
+			.tcwlw_compare_number {
+				display: none;
+			}
+
+			.tcwlw_result {
+				.tcwlw_result_left,
+				.tcwlw_result_right {
+					clear: both;
+					width: 100%;
+					padding-left: 0;
+					padding-right: 0;
+				}
+
+				.tcwlw_result_title,
+				.tcwlw_result_compare {
+					clear: both;
+					width: 100%;
+					padding-right: 0;
+				}
+
+				.tcwlw_result_compare {
+					text-align: left;
+				}
+
+				.tcwlw_result_type,
+				.tcwlw_warranty {
+					@include padding-bottom(0.2);
+					display: block;
+				}
+
+				.tcwlw_result_type {
+					margin-right: 0;
+					padding-right: 0;
+					border: none;
+				}
+			}
+
+			.tcwlw_tab_cont {
+				.tcwlw_result_specs_list {
+					li {
+						width: 100%;
+						margin-left: 0;
+						margin-right: 0;
+						display: block;
+					}
+				}
+			}
+
+			.tcwlw_result_select_actions,
+			.tcwlw_result_price_wrapper,
+			.tcwlw_select_btn_wrapper {
+				display: block;
+			}
+
+			.tcwlw_result_price_wrapper,
+			.tcwlw_select_btn_wrapper {
+				width: 100%;
+				padding: 0;
+				border: none;
+			}
+
+			.tcwlw_price {
+				text-align: right;
+			}
+
+			.tcwlw_select_btn_wrapper {
+				@include padding-top($baseSpacing/4);
+			}
+
+			.tcwlw_result_featured.tcwlw_result_featured {
+				@include padding-bottom($baseSpacing/6);
+
+				&:after {
+					line-height: 2.1;
+					left: auto;
+					right: -1px;
+					@include width(1.6);
+					@include height(2.2);
+				}
+
+				.tcwlw_result_header {
+					padding-left: 0;
+					@include padding-right(3.2);
+				}
+
+				.tcwlw_result_title {
+					@include font-size(1.25);
+				}
+			}
+		}
+
+		@include respond-to(smallest-screen) {
+			.tcwlw_result_price {
+				display: block;
+			}
+
+			// .tcwlw_qty,
+			// .tcwlw_price {
+			// 	width: 100%;
+			// 	display: block;
+			// }
+
+			// .tcwlw_price.tcwlw_price {
+			// 	@include padding-top($baseSpacing/4);
+			// 	text-align: left;
+			// }
+		}
+	}
+
+	// Compare List
+
+	.tcwlw_compare_wrapper {
+		.tcwlw_compare_title {
+			@include margin-bottom($baseSpacing/2);
+		}
+
+		.tcwlw_compare_title_text,
+		.tcwlw_compare_qty {
+			display: inline-block;
+			@include ie7-inline-block();
+			vertical-align: middle;
+		}
+
+		.tcwlw_compare_qty {
+			@include font-size(2);
+			@include padding($baseSpacing/4);
+			border: 1px solid $grayLighter;
+			@include box-shadow();
+		}
+
+		.tcwlw_compare_title_text {
+			@include padding(0, $baseSpacing/4, $baseSpacing/8, 0);
+		}
+
+		.tcwlw_compare_list_wrapper {
+			width: 102.333%;
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.tcwlw_compare_list {
+			width: 100%;
+			@include margin-bottom($baseSpacing*2);
+			padding: 0 0 0 4px;
+			list-style: none;
+			white-space: nowrap;
+		}
+
+		.tcwlw_compare_item {
+			width: 32%;
+			margin-left: -4px;
+			margin-right: 1.333%;
+			max-width: none;
+			@include min-width(14);
+			@include padding($baseSpacing/2);
+			border: 1px solid $grayLighter;
+			display: inline-block;
+			@include ie7-inline-block();
+			vertical-align: top;
+			white-space: normal;
+
+			.tcwlw_select_btn.tcwlw_select_btn {
+				max-width: none;
+			}
+		}
+
+		.tcwlw_compare_item_title {
+			@include font-size(1.25);
+			font-weight: bold;
+			min-height: 60px;
+		}
+
+		ul.tcwlw_result_specs_list {
+			@include margin-bottom($baseSpacing/2);
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			li {
+				width: 100%;
+				margin-left: 0;
+				margin-right: 0;
+				@include padding($baseSpacing/4);
+
+				&:nth-child(2n) {
+					background: $grayLightest;
+				}
+			}
+		}
+
+		.tcwlw_result_select_actions {
+			@include margin-top($baseSpacing/2);
+			@include padding-top($baseSpacing/2);
+			border-top: 1px solid $grayLighter;
+		}
+
+		// Faux Media
+
+		@include tireconnect-width(small) {
+			.tcwlw_compare_list_wrapper {
+				width: 100%;
+			}
+
+			.tcwlw_compare_list {
+				padding: 0;
+				white-space: normal;
+			}
+
+			.tcwlw_compare_item {
+				width: 100%;
+				@include margin(0, 0, $baseSpacing/4);
+				min-width: 0;
+			}
+		}
+
+		// Media
+
+		@include respond-to(smaller-screen) {
+			.tcwlw_compare_list_wrapper {
+				width: 100%;
+			}
+
+			.tcwlw_compare_list {
+				padding: 0;
+				white-space: normal;
+			}
+
+			.tcwlw_compare_item {
+				width: 100%;
+				@include margin(0, 0, $baseSpacing/4);
+				min-width: 0;
+			}
+		}
+	}
+}
+
+/* Items outside of the main widget wrapper */
+
+#tcwlw_widget_outer {	
+	.tcwlw_result_tire_lrg {
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+}

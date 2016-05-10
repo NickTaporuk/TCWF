@@ -1,0 +1,6 @@
+components/.module-cache/
+bower_components/
+node_modules/
+components/
+.sass-cache/
+.idea/

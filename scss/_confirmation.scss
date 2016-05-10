@@ -1,0 +1,124 @@
+/***************************************
+
+    #CONFIRMATION
+
+****************************************/
+
+#tcwlw_widget {
+	.tcwlw_confirmation_wrapper {
+		table td, table th {
+			@include padding(0.5);
+		}
+
+		.tcwlw_table_wrapper {
+			@include margin-bottom(1.4);
+				
+			td small {
+				display: block;
+			}
+		}
+
+		// h5 {
+		// 	@include font-size(1.8);
+		// }
+
+		// h2 {
+		// 	@include font-size(3);	
+		// }
+	}
+
+	.tcwlw_confirmation_location {
+		@include padding(0, 0, $baseSpacing/4);
+
+		.tcwlw_confirmation_location_item {
+			display: block;
+		}
+	}
+
+	.tcwlw_confirmation_number {
+		text-align: right;
+	}
+
+	// Faux Media
+
+	@include tireconnect-width(small) {
+		.tcwlw_confirmation_location,
+		.tcwlw_confirmation_number {
+			clear: both;
+			width: 100%;
+			margin-right: 0;
+		}
+
+		.tcwlw_confirmation_number {
+			text-align: left;
+		}
+	}
+
+	// Media
+
+	@include respond-to(smaller-screen) {
+		.tcwlw_confirmation_location,
+		.tcwlw_confirmation_number {
+			clear: both;
+			width: 100%;
+			margin-right: 0;
+		}
+
+		.tcwlw_confirmation_number {
+			text-align: left;
+		}
+	}
+
+	@media print {
+		// .tcwlw_confirmation_wrapper {
+			.tcwlw_wrapper {
+				@include padding(0.5);
+			}
+
+			.tcwlw_bottom_btns {
+				display: none;
+			}
+
+			.tcwlw_confirmation_location {
+				@include padding(0, 0, 0.5);
+			}
+
+			.tcwlw_confirmation_wrapper {
+
+				table td, table th {
+					@include padding(0.2);
+				}
+	
+
+				.tcwlw_table_wrapper {
+					@include margin-bottom(0.8);
+
+					td small {
+						display: none;
+					}
+				}
+			}
+
+			p {
+				@include margin-bottom(0.2);
+				@include font-size(1.4);
+				line-height: 1.1;
+			}
+
+			h2 {
+				@include padding(0, 0, 0.2);
+				@include font-size(2.6);
+				line-height: 1.1;
+			}
+
+			h5 {
+				@include font-size(1.5);
+			}
+
+			.tcwlw_powered_by {
+				display: none;
+			}
+
+		// }
+	}
+}

@@ -1,0 +1,100 @@
+/***************************************
+
+    #SUMMARY
+
+****************************************/
+
+#tcwlw_widget {
+	.tcwlw_summary_wrapper {
+		@include padding-top($baseSpacing/2);
+		
+		.tcwlw_discount_row,
+		.tcwlw_rebate_row {
+			@include font-size(1);
+			
+			td {
+				font-weight: normal;
+
+				&:last-child {
+					text-align: left;
+				}
+			}
+
+			h4 {
+				@include font-size(2);
+				font-weight: bold;
+				@include padding-bottom($baseSpacing/6);
+
+				&:last-child {
+					padding-bottom: 0;
+				}
+			}
+
+			.tcwlw_btn,
+			.tcwlw_brand_btn {
+				@include font-size(0.875);
+			}
+		}
+
+		.tcwlw_rebate_row {
+			background: $orange;
+		}
+
+		tfoot {
+			.tcwlw_rebate_row {
+				@include font-size(0.8);
+			}
+		}
+
+		.tcwlw_discount_wrapper {
+			background: white;
+			color: $grayDarker;
+			float: right;
+			@include margin-left($baseSpacing/2);
+			@include padding($baseSpacing/3);
+			border: 1px solid $grayLighter;
+			text-align: right;
+		}
+
+		.tcwlw_order_info_vehicle {
+			font-weight: bold;
+			@include padding(1.2, 0, $baseSpacing/2);
+
+			.tcwlw_order_info_vehicle_item {
+				display: block;
+			}
+		}
+
+		// Faux Media
+
+		@include tireconnect-width(small) {
+			.tcwlw_discount_wrapper {
+				float: none;
+				clear: both;
+				@include margin(0, 0, $baseSpacing/3);
+				text-align: left;
+			}
+		}		
+
+		// Media
+
+		@include respond-to(smaller-screen) {
+			.tcwlw_appointment_info {
+				.tcwlw_quote_tire,
+				.tcwlw_order_info_vehicle {
+					width: 100%;
+					margin-right: 0;
+				}
+			}
+		}
+	}
+
+	.tcwlw_quote_wrapper {
+		@include padding-top($baseSpacing/2);
+
+		p {
+			@include font-size(2);
+    		@include margin-top($baseSpacing/2);
+		}
+	}
+}

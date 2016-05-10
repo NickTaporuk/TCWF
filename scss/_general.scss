@@ -1,0 +1,192 @@
+/***************************************
+
+    #GENERAL LAYOUT
+
+****************************************/
+
+body {
+	&.tcwlw_modal-open {
+		overflow: hidden;
+	}
+}
+
+// Root element
+
+#tcwlw_root {
+	clear: both;
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+	@include clearfix();
+}
+
+#tcwlw_widget_outer {
+	position: absolute; 
+	top: 0; 
+	width: 100%; 
+	z-index: 999999; 
+	overflow: visible;
+}
+
+#tcwlw_widget {
+    text-align: left;
+
+	sup {
+		vertical-align: 0.5em;
+	}
+
+	// @include margin-bottom($baseSpacing);
+
+	.tcwlw_wrapper {
+		background: white;
+		@include padding($baseSpacing, $baseSpacing/1.5);
+		border: 1px solid $grayLighter;
+		// overflow: hidden;
+		@include clearfix();
+	}
+
+	.tcwlw_powered_by {
+		@include font-size($baseFontSize*0.875);
+		color: $gray;
+		max-width: none;
+		@include padding($baseSpacing/4);
+		margin: 0;
+		text-align: right;
+
+		img {
+			width: auto;
+			@include height(2.4);
+			@include margin-left($baseSpacing/6);
+			display: inline;
+			vertical-align: middle;
+		}
+	}
+
+	.tcwlw_max_width {
+		@include max-width(78);
+		margin: 0 auto;
+	}
+
+	// In-store header
+
+	.tcwlw_instore_header {
+		@include padding-bottom($baseSpacing/2);
+	}
+
+	.tcwlw_instore_logo {
+		@include margin-bottom($baseSpacing/2);
+		display: block;
+	}
+
+	.tcwlw_instore_title {
+		@include padding-top($baseSpacing/2);
+		text-align: right;
+	}
+
+
+	// Steps list
+
+	ul.tcwlw_steps_list {
+		clear: both;
+		width: 103%;
+		@include margin-bottom($baseSpacing/2);
+		margin-left: -1.5%;
+		@include padding(0, 0.2);
+		text-align: center;
+
+		.tcwlw_steps_list_item {
+			@include font-size($baseFontSize*0.875);
+			font-weight: bold;
+			@include line-height($baseLineHeight*0.917);
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			color: white;
+			position: relative;
+			width: 28.3%;
+			min-width: 158px;
+			height: 40px;
+			@include margin-top($baseLineHeight/4);
+			@include margin-bottom($baseLineHeight/4);
+			margin-left: 2%;
+			margin-right: 2%;
+			@include padding($baseLineHeight/2, 0.5);
+			border-color: $secondaryColor;
+			display: inline-block;
+			@include ie7-inline-block();
+
+			&:before,
+			&:after {
+				content: '';
+				position: absolute;
+				top: 0;
+				width: 0;
+				height: 100%;
+				@include rotate(360deg);
+			}
+
+			&:before {
+				left: -16px;
+				border-color: inherit;
+				border-left-color: transparent;
+				border-right-color: transparent;
+				border-style: solid none solid solid;
+				border-width: 20px 0 20px 16px;
+			}
+
+			&:after {
+				right: -16px;
+				border-color: inherit;
+				border-top-color: transparent;
+				border-right-color: transparent;
+				border-bottom-color: transparent;
+				border-style: solid;
+			    border-width: 20px 0 20px 16px;
+			}
+
+			&.tcwlw_active {
+				background: $primaryColor;
+				border-color: $primaryColor;
+			}
+		}
+	}
+
+	// Faux Media
+
+	@include tireconnect-width(small) {
+		.tcwlw_instore_title {
+			text-align: left;
+		}
+	}
+
+	@include tireconnect-width(tiny) {
+		.tcwlw_steps_list {
+			.tcwlw_steps_list_item {
+				width: 88%;
+				min-width: 0;
+				margin-left: 6%;
+				margin-right: 6%;
+			}
+		}
+	}
+
+	// Media
+
+	@include respond-to(smaller-screen) {
+		.tcwlw_wrapper {
+			@include padding($baseSpacing/2);
+		}
+
+		.tcwlw_instore_title {
+			text-align: left;
+		}
+
+		.tcwlw_steps_list {
+			.tcwlw_steps_list_item {
+				width: 88%;
+				min-width: 0;
+				margin-left: 6%;
+				margin-right: 6%;
+			}
+		}
+	}
+}

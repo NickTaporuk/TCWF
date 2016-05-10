@@ -1,0 +1,248 @@
+/***************************************
+
+    #SEARCH
+
+****************************************/
+
+#tcwlw_widget {
+	.tcwlw_search_wrapper {
+		.tcwlw_search_toggle {
+			display: none;
+
+			i {
+				margin-left: 0;
+			}
+		}
+
+		&.tcwlw_closed,
+		&.tcwlw_toggle_hidden {
+			.tcwlw_search_toggle {
+				display: inline-block;
+			}
+
+			.tcwlw_search_inner {
+				display: none;
+			}
+		}
+	}
+
+
+	.tcwlw_change_location {
+		position: relative;
+		float: right;
+		@include margin-bottom($baseSpacing/6);
+		display: block;
+		z-index: 10;
+
+		i {
+			font-size: 120%;
+			@include margin-right(0.2);
+			vertical-align: -3px;
+		}
+	}
+
+	.tcwlw_search_by {
+		clear: both;
+		position: relative;
+		width: 100%;
+		@include margin-bottom($baseSpacing/2);
+		z-index: 2;
+	}
+
+	.tcwlw_fields_wrapper {
+		padding-left: 8px;
+
+		.tcwlw_field {
+			float: none;
+			color: $secondaryColor;
+			position: relative;
+			width: 100%;
+			min-width: 248px;
+			margin-left: -4px;
+			@include padding(0, 0, 0, $baseSpacing*2);
+			display: inline-block;
+			@include ie7-inline-block();
+			vertical-align: top;
+			counter-increment: steps-counter;
+
+			&:before {
+				content: counter(steps-counter);
+				background: $secondaryColor;
+				@include font-size($baseFontSize);
+				font-weight: bold;
+				line-height: 2.1;
+				color: white;
+				position: absolute;
+				@include top(-0.4);
+				left: 0;
+				@include width(2.2);
+				@include height(2.2);
+				@include rounded(50%);
+				display: block;
+				text-align: center;
+			}
+
+			p {
+				color: $grayDarkest;
+			}
+
+			select {
+				@include margin-bottom($baseSpacing);
+			}
+		}
+
+		.tcwlw_fields_wrapper_2 {
+			counter-reset: steps-counter 3;
+		}
+	}
+
+
+	// Faux Media
+
+	@include tireconnect-width(small) {
+		.tcwlw_search_by {
+			.tcwlw_tab {
+				width: 100%;
+				margin-right: 0;
+
+				a {
+					float: none;
+					margin-bottom: -1px;
+					display: block;
+				}
+			}
+		}
+
+		.tcwlw_search_fields {
+			@include padding-top($baseSpacing/1.5);
+		}
+	}
+
+	@include tireconnect-width(tiny) {
+		.tcwlw_fields_wrapper {
+			.tcwlw_sixcol {
+				width: 100%;
+				margin-right: 0;
+			}
+
+			.tcwlw_field {
+				width: 100%;
+				min-width: 0;
+				margin-right: 0;
+				padding: 0;
+
+				&:before {
+					line-height: 2;
+					@include top(-0.6);
+					@include left(-0.1);
+					@include width(2);
+					@include height(2);
+				}
+
+				> label {
+					@include margin-top(-0.1);
+					@include padding(0, 0, 0.1, 2);
+				}
+			}
+
+			.tcwlw_brand_btn {
+				margin-left: -4px;
+			}
+		}
+	}
+
+	// Media
+
+	@include respond-to(smaller-screen) {
+		.tcwlw_search_by {
+			.tcwlw_tab {
+				width: 100%;
+				margin-right: 0;
+
+				a {
+					float: none;
+					margin-bottom: -1px;
+					display: block;
+				}
+			}
+
+			.tcwlw_search_fields.tcwlw_search_fields {
+				@include padding-top($baseSpacing/1.5);
+			}
+		}
+
+		.tcwlw_fields_wrapper {
+			.tcwlw_sixcol {
+				width: 100%;
+				margin-right: 0;
+			}
+
+			.tcwlw_field {
+				width: 100%;
+				min-width: 0;
+				margin-right: 0;
+				padding: 0;
+
+				&:before {
+					line-height: 2;
+					@include top(-0.6);
+					@include left(-0.1);
+					@include width(2);
+					@include height(2);
+				}
+
+				> label {
+					@include margin-top(-0.1);
+					@include padding(0, 0, 0.1, 2);
+				}
+			}
+
+			.tcwlw_brand_btn {
+				margin-left: -4px;
+			}
+		}
+	}
+}
+
+/* Items outside of the main widget wrapper */
+
+#tcwlw_widget_outer {
+	.tcwlw_locations {
+		@include margin-bottom(-$baseSpacing);
+		padding: 0 0 0 4px;
+		list-style: none;
+
+		li {
+			width: 50%;
+			margin-left: -4px;
+			padding-right: 2%;
+			@include margin-bottom($baseSpacing);
+			display: inline-block;
+			@include ie7-inline-block();
+			vertical-align: top;
+		}
+
+		h4,
+		h5 {
+			font-weight: bold;
+			padding-bottom: 0;
+		}
+
+		.tcwlw_location_btn {
+			@include margin-top(0.5);
+			display: block;
+		}
+	}
+
+	// Media
+
+	@include respond-to(smaller-screen) {
+		.tcwlw_locations {
+			li {
+				width: 100%;
+				padding-right: 0;
+				display: block;
+			}
+		}
+	}
+}

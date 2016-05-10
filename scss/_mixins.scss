@@ -1,0 +1,555 @@
+/***************************************
+
+    #MIXINS
+
+****************************************/
+
+// REM Based Font Size
+
+@mixin font-size($sizeValue: 1) {
+	$remValue: $sizeValue;
+	font-size: #{$remValue+em};
+}
+
+@mixin line-height($sizeValue: 1.5) {
+	$remValue: $sizeValue;
+	line-height: #{$remValue+em};
+}
+
+//REM Based Margins and Padding
+
+@mixin margin($top: -0.01, $right: -0.01, $bottom: -0.01, $left: -0.01) {
+	
+	@if $right != -0.01 and $bottom != -0.01 and $left != -0.01 {
+		$remTop: $top;
+		$remRight: $right;
+		$remBottom: $bottom;
+		$remLeft: $left;
+		margin: #{$remTop+em $remRight+em $remBottom+em $remLeft+em};
+	}
+
+	@if $right != -0.01 and $bottom != -0.01 and $left == -0.01 {
+		$remTop: $top;
+		$remRight: $right;
+		$remBottom: $bottom;
+		$remLeft: $right;
+		margin: #{$remTop+em $remRight+em $remBottom+em $remLeft+em};
+	}
+
+	@if $right != -0.01 and $bottom == -0.01 and $left == -0.01 {
+		$remTop: $top;
+		$remRight: $right;
+		$remBottom: $top;
+		$remLeft: $right;
+		margin: #{$remTop+em $remRight+em $remBottom+em $remLeft+em};
+	}
+
+	@if $right == -0.01 and $bottom == -0.01 and $left == -0.01 {
+		$remTop: $top;
+		$remRight: $top;
+		$remBottom: $top;
+		$remLeft: $top;
+		margin: #{$remTop+em $remRight+em $remBottom+em $remLeft+em};
+	}
+
+}
+
+// Individual margins
+
+@mixin margin-top($sizeValue: 1) {
+	$remValue: $sizeValue;
+	margin-top: #{$remValue+em};
+}
+
+@mixin margin-bottom($sizeValue: 1) {
+	$remValue: $sizeValue;
+	margin-bottom: #{$remValue+em};
+}
+
+@mixin margin-left($sizeValue: 1) {
+	$remValue: $sizeValue;
+	margin-left: #{$remValue+em};
+}
+
+@mixin margin-right($sizeValue: 1) {
+	$remValue: $sizeValue;
+	margin-right: #{$remValue+em};
+}
+
+// Shorthand padding
+
+@mixin padding($top: -0.01, $right: -0.01, $bottom: -0.01, $left: -0.01) {
+
+	@if $right != -0.01 and $bottom != -0.01 and $left != -0.01 {
+		$remTop: $top;
+		$remRight: $right;
+		$remBottom: $bottom;
+		$remLeft: $left;
+		padding: #{$remTop+em $remRight+em $remBottom+em $remLeft+em};
+	}
+
+	@if $right != -0.01 and $bottom != -0.01 and $left == -0.01 {
+		$remTop: $top;
+		$remRight: $right;
+		$remBottom: $bottom;
+		$remLeft: $right;
+		padding: #{$remTop+em $remRight+em $remBottom+em $remLeft+em};
+	}
+
+	@if $right != -0.01 and $bottom == -0.01 and $left == -0.01 {
+		$remTop: $top;
+		$remRight: $right;
+		$remBottom: $top;
+		$remLeft: $right;
+		padding: #{$remTop+em $remRight+em $remBottom+em $remLeft+em};
+	}
+
+	@if $right == -0.01 and $bottom == -0.01 and $left == -0.01 {
+		$remTop: $top;
+		$remRight: $top;
+		$remBottom: $top;
+		$remLeft: $top;
+		padding: #{$remTop+em $remRight+em $remBottom+em $remLeft+em};
+	}
+
+}
+
+//Individual padding
+
+@mixin padding-top($sizeValue: 1) {
+	$remValue: $sizeValue;
+	padding-top: #{$remValue+em};
+}
+
+@mixin padding-bottom($sizeValue: 1) {
+	$remValue: $sizeValue;
+	padding-bottom: #{$remValue+em};
+}
+
+@mixin padding-left($sizeValue: 1) {
+	$remValue: $sizeValue;
+	padding-left: #{$remValue+em};
+}
+
+@mixin padding-right($sizeValue: 1) {
+	$remValue: $sizeValue;
+	padding-right: #{$remValue+em};
+}
+
+// Width/Height
+
+@mixin width($widthValue) {
+	$remValue: $widthValue;
+	width: #{$remValue+em};
+}
+
+@mixin height($heightValue) {
+	$remValue: $heightValue;
+	height: #{$remValue+em};
+}
+
+@mixin min-width($widthValue) {
+	$remValue: $widthValue;
+	min-width: #{$remValue+em};
+}
+
+@mixin min-height($heightValue) {
+	$remValue: $heightValue;
+	min-height: #{$remValue+em};
+}
+
+@mixin max-width($widthValue) {
+	$remValue: $widthValue;
+	max-width: #{$remValue+em};
+}
+
+@mixin max-height($heightValue) {
+	$remValue: $heightValue;
+	max-height: #{$remValue+em};
+}
+
+// Positioning
+
+@mixin top($topValue) {
+	$remValue: $topValue;
+	top: #{$remValue+em};
+}
+
+@mixin bottom($bottomValue) {
+	$remValue: $bottomValue;
+	bottom: #{$remValue+em};
+}
+
+@mixin left($leftValue) {
+	$remValue: $leftValue;
+	left: #{$remValue+em};
+}
+
+@mixin right($rightValue) {
+	$remValue: $rightValue;
+	right: #{$remValue+em};
+}
+
+// Backgrounds
+
+@mixin gradient($startcolor, $endcolor, $orientation: vertical) {
+    @if $orientation == vertical {
+		background-image: -moz-linear-gradient(top,  $startcolor 0%, $endcolor 100%);
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$startcolor), color-stop(100%,$endcolor));
+		background-image: -webkit-linear-gradient(top,  $startcolor 0%,$endcolor 100%);
+		background-image: -o-linear-gradient(top,  $startcolor 0%,$endcolor 100%);
+		background-image: -ms-linear-gradient(top,  $startcolor 0%,$endcolor 100%);
+		background-image: linear-gradient(to bottom,  $startcolor 0%,$endcolor 100%);
+    }
+
+    @else if $orientation == horizontal {
+		background-image: -moz-linear-gradient(left,  $startcolor 0%, $endcolor 100%);
+		background-image: -webkit-gradient(linear, left top, right top, color-stop(0%,$startcolor), color-stop(100%,$endcolor));
+		background-image: -webkit-linear-gradient(left,  $startcolor 0%,$endcolor 100%);
+		background-image: -o-linear-gradient(left,  $startcolor 0%,$endcolor 100%);
+		background-image: -ms-linear-gradient(left,  $startcolor 0%,$endcolor 100%);
+		background-image: linear-gradient(to right,  $startcolor 0%,$endcolor 100%);
+    }
+
+    @else {
+      	background-image: -moz-radial-gradient(center, ellipse cover,  $startcolor 0%, $endcolor 100%);
+      	background-image: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,$startcolor), color-stop(100%,$endcolor));
+      	background-image: -webkit-radial-gradient(center, ellipse cover,  $startcolor 0%,$endcolor 100%);
+      	background-image: -o-radial-gradient(center, ellipse cover,  $startcolor 0%,$endcolor 100%);
+      	background-image: -ms-radial-gradient(center, ellipse cover,  $startcolor 0%,$endcolor 100%);
+      	background-image: radial-gradient(ellipse at center,  $startcolor 0%,$endcolor 100%);
+    }
+}
+
+@mixin trans-black() {
+	background: url('../img/black-75.png');
+	background: fade-out(black, 0.3);
+}
+
+@mixin trans-white() {
+	background: url('../img/white-75.png');
+	background: fade-out(white, 0.25);
+}
+
+// Rounded Corners 
+
+@mixin rounded ($borderRadius: 5px) {
+    -webkit-border-radius: $borderRadius;
+    -moz-border-radius: $borderRadius;
+    border-radius: $borderRadius;
+}
+
+// Text Shadow 
+
+@mixin text-shadow($args: 0 1px 1px rgba(0, 0, 0, 0.5)) {
+	-webkit-text-shadow: $args;
+	-moz-text-shadow: $args;
+	text-shadow: $args;
+}
+
+// Box Shadow 
+
+@mixin box-shadow($args: 0 4px 1px -2px fade-out(black, 0.85)) {
+	-webkit-box-shadow: $args;
+	-moz-box-shadow: $args;
+	box-shadow: $args;
+}
+
+// Buttons
+
+@mixin button($buttonColor: $grayDark) {
+	background-color: $buttonColor;
+	@include gradient(fade-out(white, 0.85), fade-out(black, 0.85));
+	font-family: $fontSans;
+	@include font-size($baseFontSize*1.25);
+	font-weight: $bold;
+	line-height: 1.2;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	text-indent: -0.05em;
+	color: white;
+	text-decoration: none;
+	-webkit-appearance: none;
+	text-shadow: none;
+	height: auto;
+	@include margin-bottom($baseSpacing/6);
+	@include padding($baseLineHeight/1.5, $baseLineHeight);
+	border: none;
+    @include rounded(5px);
+	display: inline-block;
+	@include box-shadow(0 6px 1px -3px fade-out(black, 0.85));
+	text-align: center;
+	@include transition();
+
+	i,
+	.tcwlw_material_icons {
+		font-size: 120%;
+		line-height: 1;
+		color: inherit;
+		vertical-align: -5px;
+	}
+
+	//&:focus,
+	&:hover {
+		background-color: $grayDarkest;
+		color: white;
+		outline: none;
+	}
+	
+	&:active {
+		@include translateY(2px);
+		@include box-shadow(none);
+	}
+
+	&[disabled] {
+		background-color: $gray;
+		opacity: 0.75;
+		cursor: not-allowed;
+
+		@include box-shadow(none);
+		
+		// &:focus,
+		// &:hover {
+		// 	background-color: $buttonColor;
+		// }
+
+		&:active {
+			@include translateY(0);
+		}
+	}
+}
+
+@mixin button-light($buttonColor: $primaryColor) {
+	background-color: white;
+	font-family: $fontSans;
+	@include font-size($baseFontSize*1.25);
+	font-weight: $bold;
+	line-height: 1.2;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	text-indent: -0.05em;
+	color: $buttonColor;
+	text-decoration: none;
+	-webkit-appearance: none;
+	text-shadow: none;
+	height: auto;
+	@include margin-bottom($baseSpacing/6);
+	@include padding($baseLineHeight/1.5, $baseLineHeight);
+	border-width: 1px;
+	border-style: solid;
+	border-color: $grayDarkest;
+	border-color: currentColor;
+    @include rounded(5px);
+	display: inline-block;
+	@include box-shadow(0 6px 1px -3px fade-out(black, 0.85));
+	text-align: center;
+	@include transition();
+
+	i,
+	.tcwlw_material_icons {
+		font-size: 120%;
+		line-height: 1;
+		color: inherit;
+		vertical-align: -5px;
+	}
+
+	//&:focus,
+	&:hover {
+		background: lighten($grayLightest, 5%);
+		color: $grayDarkest;
+		outline: none;
+	}
+	
+	&:active {
+		@include translateY(2px);
+		@include box-shadow(none);
+	}
+
+	&[disabled] {
+		color: $gray;
+		opacity: 0.75;
+		cursor: not-allowed;
+		
+		// &:focus,
+		&:hover {
+			background-color: white;
+		}
+
+		&:active {
+			@include translateY(0);
+		}
+	}
+}
+
+// Transforms
+
+@mixin rotate($degrees) {
+    -webkit-transform: rotate($degrees);
+    -moz-transform: rotate($degrees);
+    -ms-transform: rotate($degrees);
+    -o-transform: rotate($degrees);
+    transform: rotate($degrees);
+}
+
+@mixin translateX($value) {
+    -webkit-transform: translateX($value);
+    -moz-transform: translateX($value);
+    -ms-transform: translateX($value);
+    -o-transform: translateX($value);
+    transform: translateX($value);
+}
+
+@mixin translateY($value) {
+    -webkit-transform: translateY($value);
+    -moz-transform: translateY($value);
+    -ms-transform: translateY($value);
+    -o-transform: translateY($value);
+    transform: translateY($value);
+}
+
+// Various
+
+@mixin transition($args: all 0.2s ease-out) {
+	-webkit-transition: $args;
+	-moz-transition: $args;
+	-o-transition: $args;
+	transition: $args;   
+}
+
+@mixin boxsizing ($sizing: border-box) {
+	-webkit-box-sizing: $sizing; 
+	-moz-box-sizing: $sizing;
+	box-sizing: $sizing;
+}
+
+@mixin ie7-inline-block() {
+	*display: inline; /* IE7 inline-block hack */
+	*zoom: 1;
+}
+
+@mixin clearfix {
+    zoom:1;
+
+    &:before, &:after {
+        content: "\0020"; 
+        display: block; 
+        height: 0; 
+        overflow: hidden; 
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin icons() {
+	font-family: 'Material Icons';
+	font-size: inherit;
+	font-weight: normal;
+    font-style: normal;
+	line-height: inherit;
+	letter-spacing: normal;
+    text-transform: none;
+	color: $grayDarkest;
+	word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+	@include margin(0, 0.2);
+	display: inline-block;
+    white-space: nowrap;
+	vertical-align: top;
+}
+
+@mixin box() {
+	background: white;
+	clear: both;
+	@include padding($baseSpacing);
+	display: block;
+	border: 1px solid $grayLighter;
+	@include box-shadow();
+}
+
+// Media Queries
+
+@mixin respond-to($size) {
+
+	@if $size == larger-screen {
+		@media handheld, only screen and (max-width: 72em) { // ~ 1140px
+	  		@content
+	  	}
+	}
+
+	@if $size == large-screen {
+		@media handheld, only screen and (max-width: 64em) { // ~ 1024px
+	  		@content
+	  	}
+	}
+
+	@if $size == medium-screen {
+		@media handheld, only screen and (max-width: 58em) { // ~ 928px
+	  		@content
+	  	}
+	}
+
+	@if $size == small-screen {
+		@media handheld, only screen and (max-width: 48em) { // ~ 768px
+	  		@content
+	  	}
+	}
+
+	@if $size == smaller-screen {
+		@media handheld, only screen and (max-width: 37.5em) { // ~ 600px
+	  		@content
+	  	}
+	}
+
+	@if $size == smallest-screen {
+		@media handheld, only screen and (max-width: 30em) { // ~ 480px
+	  		@content
+	  	}
+	}
+
+	@if $size == tiny-screen {
+		@media handheld, only screen and (max-width: 19.938em) { // ~ 319px, below iPhone
+	  		@content
+	  	}
+	}
+
+}
+
+// Faux media queries for checking width of widget container
+
+@mixin tireconnect-width($size) {
+
+	@if $size == large {
+		[data-tcwlw-w="t"] &,
+		[data-tcwlw-w="t s"] &,
+		[data-tcwlw-w="t s m"] &,
+		[data-tcwlw-w="t s m l"] & { // >= 1024
+	  		@content
+	  	}
+	}
+
+	@if $size == medium {
+		[data-tcwlw-w="t"] &,
+		[data-tcwlw-w="t s"] &,
+		[data-tcwlw-w="t s m"] & { // < 1024 / >= 768
+	  		@content
+	  	}
+	}
+
+	@if $size == small {
+		[data-tcwlw-w="t"] &,
+		[data-tcwlw-w="t s"] & { // < 768 / >= 601
+	  		@content
+	  	}
+	}
+
+	@if $size == tiny {
+		[data-tcwlw-w="t"] & { // < 601
+	  		@content
+	  	}
+	}
+
+}

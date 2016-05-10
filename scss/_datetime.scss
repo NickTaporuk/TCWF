@@ -1,0 +1,263 @@
+/***************************************
+
+    #DATETIME
+
+****************************************/
+
+#tcwlw_widget {
+    .tcwlw_rdt {
+        position: relative;
+    }
+    .tcwlw_rdtPicker {
+        display: none;
+        position: absolute;
+        //width: 15.6em;
+        padding: 0.3em;
+        margin-top: 0.1em;
+        z-index: 99999 !important;
+        background: #fff;
+        box-shadow: 0 0.1em 0.2em rgba(0,0,0,.1);
+        border: 0.1em solid #f9f9f9;
+        bottom: 100%;
+        right: 0;
+
+        font-size: 1.4em;
+    }
+    .tcwlw_rdtOpen .tcwlw_rdtPicker {
+        display: block;
+    }
+    .tcwlw_rdtStatic .tcwlw_rdtPicker {
+        box-shadow: none;
+        position: static;
+    }
+
+    .tcwlw_rdtPicker .tcwlw_rdtTimeToggle {
+        text-align: center;
+    }
+
+    .tcwlw_rdtPicker table {
+        width: 100%;
+        margin: 0;
+        font-size: 1em;
+    }
+    .tcwlw_rdtPicker td,
+    .tcwlw_rdtPicker th {
+        padding: 0.3em;
+        text-align: center;
+        height: 1.8em;
+        font-size: 1em;
+    }
+    .tcwlw_rdtPicker tbody td {
+        font-size: 1.1em;
+    }
+    .tcwlw_rdtPicker td.tcwlw_rdtToday:hover,
+    .tcwlw_rdtPicker td.tcwlw_rdtHour:hover,
+    .tcwlw_rdtPicker td.tcwlw_rdtMinute:hover,
+    .tcwlw_rdtPicker td.tcwlw_rdtSecond:hover,
+    .tcwlw_rdtPicker .tcwlw_rdtTimeToggle:hover {
+        background: #eeeeee;
+        cursor: pointer;
+    }
+    .tcwlw_rdtPicker td.tcwlw_rdtOld,
+    .tcwlw_rdtPicker td.tcwlw_rdtNew {
+        color: #999999;
+    }
+    .tcwlw_rdtPicker td.tcwlw_rdtDay {
+        cursor: pointer;
+    }
+    .tcwlw_rdtPicker td.tcwlw_rdtToday {
+        position: relative;
+    }
+    .tcwlw_rdtPicker td.tcwlw_rdtToday:before {
+      content: '';
+      display: inline-block;
+      border-left: 0.4em solid transparent;
+      border-bottom: 0.4em solid #428bca;
+      border-top-color: rgba(0, 0, 0, 0.2);
+      position: absolute;
+      bottom: 0.3em;
+      right: 0.3em;
+    }
+    .tcwlw_rdtPicker td.tcwlw_rdtActive,
+    .tcwlw_rdtPicker td.tcwlw_rdtActive:hover {
+      background-color: #428bca;
+      color: #fff;
+      text-shadow: 0 -0.1em 0 rgba(0, 0, 0, 0.25);
+    }
+    .tcwlw_rdtPicker td.tcwlw_rdtActive.tcwlw_rdtToday:before {
+      border-bottom-color: #fff;
+    }
+    .tcwlw_rdtPicker td.tcwlw_rdtDisabled,
+    .tcwlw_rdtPicker td.tcwlw_rdtDisabled:hover {
+      background: none;
+      color: #dfdfdf;
+      cursor: not-allowed;
+    }
+
+    .tcwlw_rdtPicker td span.tcwlw_rdtOld {
+      color: #999999;
+    }
+    .tcwlw_rdtPicker td span.tcwlw_rdtDisabled,
+    .tcwlw_rdtPicker td span.tcwlw_rdtDisabled:hover {
+      background: none;
+      color: #dfdfdf;
+      cursor: not-allowed;
+    }
+    .tcwlw_rdtPicker th {
+        border-bottom: 0.1em solid #f9f9f9;
+        vertical-align: middle;
+    }
+    .tcwlw_rdtPicker .dow {
+      width: 14.2857%;
+      border-bottom: none;
+    }
+    .tcwlw_rdtPicker th.tcwlw_rdtSwitch {
+      width: 6.25em;
+    }
+    .tcwlw_rdtPicker th.tcwlw_rdtNext,
+    .tcwlw_rdtPicker th.tcwlw_rdtPrev {
+      font-size: 1.3em;
+      vertical-align: top;
+    }
+    .tcwlw_rdtPicker th.tcwlw_rdtDisabled,
+    .tcwlw_rdtPicker th.tcwlw_rdtDisabled:hover {
+      background: none;
+      color: #999999;
+      cursor: not-allowed;
+    }
+    // .tcwlw_rdtPicker thead tr:first-child th {
+    //   cursor: pointer;
+    // }
+    .tcwlw_rdtPicker thead th.tcwlw_rdtPrev:hover,
+    .tcwlw_rdtPicker thead th.tcwlw_rdtNext:hover {
+      background: #eeeeee;
+    }
+    /*.tcwlw_rdtPicker thead tr:first-child th:hover {
+      background: #eeeeee;
+    }*/
+
+    .tcwlw_rdtPicker tfoot{
+        border-top: 0.1em solid #f9f9f9;
+    }
+
+    .tcwlw_rdtPicker table button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 1em;
+    }
+    .tcwlw_rdtPicker table button:hover {
+        background-color: #eee;
+    }
+
+    .tcwlw_rdtPicker thead button {
+        width: 100%;
+        height: 100%;
+    }
+
+    td.tcwlw_rdtMonth,
+    td.tcwlw_rdtYear {
+        height: 3em;
+        width: 25%;
+        cursor: pointer;
+    }
+    td.tcwlw_rdtMonth:hover,
+    td.tcwlw_rdtYear:hover {
+        background: #eee;
+    }
+
+    .tcwlw_rdtCounters {
+        display: inline-block;
+    }
+
+    .tcwlw_rdtCounters > div{
+        float: left;
+    }
+
+    .tcwlw_rdtCounter {
+        height: 6.3em;
+    }
+
+    .tcwlw_rdtCounter {
+        width: 2.5em;
+    }
+
+    .tcwlw_rdtCounterSeparator {
+        line-height: 6.3em;
+    }
+
+    .tcwlw_rdtCounter .tcwlw_rdtBtn {
+        height: 40%;
+        line-height: 2.5em;
+        cursor: pointer;
+    }
+    .tcwlw_rdtCounter .tcwlw_rdtBtn:hover {
+        background: #eee;
+    }
+    .tcwlw_rdtCounter .tcwlw_rdtCount {
+        height: 20%;
+        font-size: 1.2em;
+      line-height: 1em;
+    }
+
+    .tcwlw_rdtMilli {
+        vertical-align: middle;
+        padding-left: 0.5em;
+        width: 3em;
+    }
+
+    .tcwlw_rdtMilli input {
+        width: 100%;
+        font-size: 1.2em;
+        margin-top: 1.9em;
+    }
+
+
+    .tcwlw_rdtPicker .tcwlw_rdtFooter {
+      text-align: right;
+    }
+
+    .tcwlw_rdtPicker .tcwlw_rdtFooter button {
+      display: inline-block;
+      text-transform: uppercase;
+      padding: 0.2em 0;
+      border-radius: 0.3em;
+      color: #fff;
+      border: 0 none;
+      //font-family: 'Open Sans Condensed';
+      font-size: 0.9em;
+      font-weight: bold;
+      vertical-align: top;
+      width: 3.4em;
+      //height: 1.6em;
+      line-height: 1.5em;
+    }
+
+    .tcwlw_rdtDays + .tcwlw_rdtFooter {
+      margin: 0;
+      position: absolute;
+      right: 0.5em;
+      bottom: 0.5em;
+    }
+
+
+    .tcwlw_rdtPicker .tcwlw_rdtTime {
+      text-align: left;
+      line-height: 1em;
+    }
+
+    .tcwlw_rdtPicker .tcwlw_rdtTime > div {
+        padding-bottom: 0.2em;
+    }
+
+    .tcwlw_rdtPicker .tcwlw_rdtTime select {
+      margin: 0 0.2em 0 0;
+      font-size: 1.1em;
+      padding: 0 0;
+      line-height: 1em;
+      font-weight: bold;
+      width: 24%;
+      vertical-align: top;
+      height: 1.5em;
+    }
+}

@@ -1,0 +1,44 @@
+/***************************************
+
+    #HELPER CLASSES
+
+****************************************/
+
+#tcwlw_widget {
+    .tcwlw_hidden { 
+        display: none !important; 
+        visibility: hidden; 
+    }
+
+    .tcwlw_clearfix {
+        zoom: 1;
+
+        &:after {
+            display: block;
+            visibility: hidden;
+            height: 0;
+            clear: both;
+            content: ".";
+        }
+    }
+
+    .tcwlw_left {
+        float: left;
+    }
+
+    .tcwlw_right {
+        float: right
+    }
+
+    .tcwlw_textleft {
+        text-align: left;
+    }
+
+    .tcwlw_textright {
+        text-align: right;
+    }
+
+    .tcwlw_textcenter {
+        text-align: center;
+    }
+}

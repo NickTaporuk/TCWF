@@ -1,0 +1,95 @@
+/***************************************
+
+    #ORDER
+
+****************************************/
+
+#tcwlw_widget {
+
+	// Order page layout
+
+	.tcwlw_order_wrapper {
+		.tcwlw_order_options {
+			clear: both;
+			width: 100%;
+			@include margin-bottom($baseSpacing);
+			// @include padding($baseSpacing, 0);
+			border-bottom: 1px solid $grayLighter;
+			text-align: center;
+		}
+
+		.tcwlw_order_option {
+			width: 50%;
+			margin: 0 -2px;
+			@include padding($baseSpacing/2);
+			display: inline-block;
+			@include ie7-inline-block();
+			vertical-align: middle;
+
+			.tcwlw_order_option_inner {
+				position: relative;
+				width: auto;
+				display: inline-block;
+				@include ie7-inline-block();
+				text-align: left;
+			}
+
+			input {
+				@include font-size($baseFontSize);
+				position: absolute;
+				@include top($baseSpacing/3);
+				right: 100%;
+				@include margin(0.3, 0.8, 0, 0);
+			}
+
+			label {
+				margin: 0;
+				@include padding($baseSpacing/3);
+			}
+
+			input:checked + label {
+				background: $grayLightest;
+			}
+
+			img {
+				@include margin-top(0.3);
+				display: block;
+			}
+		}
+
+		.tcwlw_order_info_vehicle {
+			font-weight: bold;
+			@include padding(1.2, 0, $baseSpacing/2);
+
+			.tcwlw_order_info_vehicle_item {
+				display: block;
+			}
+		}
+
+		.tcwlw_table_wrapper {
+			table {
+				min-width: 0;
+			}
+		}
+
+		.tcwlw_verified {
+			clear: both;
+			@include margin-top(0.4);
+			margin-left: auto;
+			margin-right: auto;
+			display: block;
+		}
+
+		// Media
+
+		@include respond-to(smaller-screen) {
+			.tcwlw_order_option {
+				width: 100%;
+				margin: 0;
+				@include padding($baseSpacing/2, $baseSpacing*1.25);
+				display: block;
+				text-align: left;
+			}
+		}
+	}
+}

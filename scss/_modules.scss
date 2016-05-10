@@ -1,0 +1,372 @@
+/***************************************
+
+    #MODULES
+
+****************************************/
+
+#tcwlw_widget {
+
+	// Tabs
+
+	.tcwlw_tabs {
+		> ul {
+			clear: both;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			border: none;
+			@include clearfix();
+		}
+
+		.tcwlw_tab {
+			@include font-size($baseFontSize*1.125);
+			font-weight: bold;
+			line-height: 1.2;
+			list-style: none;
+			float: left;
+			position: relative;
+			top: 0;
+			margin-top: 0;
+			@include margin-right($baseSpacing/5);
+			margin-bottom: -2px;
+			margin-left: 0;
+			padding: 0;
+			white-space: nowrap;
+			@include transition();
+
+			a {
+				background: $grayLightest;
+				@include font-size(1);
+				float: left;
+				position: relative;
+				text-decoration: none;
+				@include padding($baseLineHeight/2.5);
+				border: 1px solid $grayLighter;
+
+				&[aria-selected="true"] {
+					background: white;
+					border-bottom: none;
+					z-index: 10;
+				}
+			}
+		}
+
+		.tcwlw_tab_cont {
+			@extend %tcwlw_box;
+			clear: both;
+			position: relative;
+			z-index: 5;
+
+			&[aria-hidden="true"] {
+				display: none;
+			}
+		}
+	}
+
+	// Pagination
+
+	ul.tcwlw_paginator {
+		@include margin(0, 0, $baseSpacing/4, -$baseSpacing/6);
+		padding: 0;
+		list-style: none;
+
+		li {
+			display: inline-block;
+			@include ie7-inline-block();
+		}
+
+		span,
+		a {
+			@include padding($baseSpacing/6);
+			display: block;
+		}
+	}
+
+	// Toggles
+
+	.tcwlw_toggle_hidden {
+		display: none;
+	}
+
+	// Various reusable links
+
+	.tcwlw_back_wrapper {
+		min-width: 145px;
+	}
+
+	.tcwlw_back_link {
+		@include margin-bottom(1);
+		display: inline-block;
+		white-space: nowrap;
+	}
+
+	.tcwlw_bottom_btns {
+		clear: both;
+		overflow: hidden;
+
+		[class*="tcwlw_btn"] {
+			@include margin-bottom($baseSpacing/2);
+		}
+
+		.tcwlw_left {
+			@include margin-right(1);
+		}
+
+		// .tcwlw_col_left,
+		// .tcwlw_col_right {
+		> div {
+			[class*="btn"] {
+				width: 100%;
+				display: block;
+			}
+		}
+	}
+
+	// Toggle Tables
+
+	.tcwlw_toggle_table {
+		.tcwlw_toggle_cell {
+			width: 82px;
+			text-align: center;
+		}
+
+		.tcwlw_toggle_cell_btn {
+			background: none;
+			@include font-size(1);
+			border: none;
+			padding: 0;
+			@include transition();
+
+			i {
+				@include font-size($baseFontSize);
+				line-height: 1;
+				color: inherit;
+				margin: 0;
+			}
+
+			span {
+				display: block;
+			}
+
+			&.tcwlw_toggle_add {
+				color: $green;
+
+				&:hover,
+				&:focus {
+					color: lighten($green, 10%);
+				}
+			}
+
+			&.tcwlw_toggle_remove {
+				color: $red;
+
+				&:hover,
+				&:focus {
+					color: lighten($red, 10%);
+				}
+			}
+		}
+	}
+
+	// Tooltips
+
+	.tcwlw_tooltip {
+		position: relative;
+
+		&:hover {
+			cursor: default;
+
+			.tcwlw_tooltip_content:not(.tcwlw_toggle_content) {
+				display: block;
+			}
+		}
+
+		.tcwlw_toggle_open {
+			i:before {
+				content: 'remove_circle';
+			}
+		}
+	}
+
+	.tcwlw_tooltip_content {
+		@include trans-black();
+		color: white;
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		@include width(16);
+		margin-bottom: 5px;
+		@include margin-left(-8);
+		@include padding($baseSpacing/3);
+		z-index: $zindexTooltip;
+
+		&:before,
+		&:after {
+			content: '';
+			position: absolute;
+			top: 100%;
+		}
+
+		&:before {
+			left: 0;
+			width: 100%;
+			height: 5px;
+		}
+
+		&:after {
+			left: 50%;
+			width: 0;
+			height: 0;
+			margin-left: -10px;
+			border-style: solid;
+			border-width: 10px 10px 0 10px;
+			border-left-color: transparent;
+			border-right-color: transparent;
+			border-top-color: $grayDarkest;
+			border-top-color: fade-out(black, 0.3);
+		}
+
+		a {
+			color: white;
+		}
+
+		p:last-child {
+			margin: 0 !important;
+		}
+	}
+
+	// Media
+
+	@include respond-to(smaller-screen) {
+		.tcwlw_tabs {
+			.tcwlw_tab {
+				width: 100%;
+				margin-right: 0;
+
+				a {
+					float: none;
+					margin-bottom: -1px;
+					display: block;
+				}
+			}
+		}
+
+		.tcwlw_bottom_btns {
+			[class*="tcwlw_btn"] {
+				clear: both;
+				width: 100%;
+			}
+		}
+
+		.tcwlw_toggle_table {
+			.tcwlw_toggle_cell {
+				width: 45px;
+			}
+
+			.tcwlw_toggle_cell_btn {
+				span {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+/* Items that appear outside of the main widget wrapper */
+
+#tcwlw_widget_outer {
+	// Modals
+	
+	.tcwlw_modal {
+		@include trans-black();
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		@include padding-top(8);
+		@include padding-bottom(4);
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+		display: none;
+		z-index: $zindexModal;
+
+		&[aria-hidden="false"] {
+			display: block;
+		}
+
+		p {
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		.tcwlw_row {
+			@include max-width(75);
+			@include padding-left(1);
+			@include padding-right(1);
+		}
+
+		.tcwlw_modal_content {
+			background: white;
+			position: relative;
+			width: 100%;
+			margin: 0 auto;
+			outline: 0;
+		}
+
+		.tcwlw_modal_content_top,
+		.tcwlw_modal_content_inner {
+			@include padding($baseSpacing);
+		}
+
+		.tcwlw_modal_content_top {
+			border-bottom: 1px solid $grayLight;
+			text-align: center;
+
+			h2
+			h3,
+			h4 {
+				padding: 0;
+			}
+		}
+
+		.tcwlw_modal_close {
+			position: absolute;
+			@include top(-1.4);
+			@include right(1);
+			width: auto;
+		}
+	}
+
+	// Alert - extending above modal styling
+
+	.tcwlw_alert {
+		@include padding-top(12);
+	}
+
+	// Loader
+
+	.tcwlw_loader {
+		@include trans-white();
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		z-index: $zindexLoader;
+		display: none;
+
+		img {
+			background: white;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 60px;
+			height: 60px;
+			margin: -30px 0 0 -30px;
+			border: 1px solid $grayLighter;
+		}
+	}
+}

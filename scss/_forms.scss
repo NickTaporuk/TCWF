@@ -1,0 +1,504 @@
+/***************************************
+
+    #FORMS
+
+****************************************/
+
+#tcwlw_widget {
+    form {
+        @include clearfix();
+    }
+
+    label {
+    	@include font-size($baseFontSize*1.125);
+    	font-weight: bold;
+    	line-height: 1.2;
+        color: $grayDarkest;
+    	@include margin-bottom($baseLineHeight/4);
+    	display: block;
+
+    	.req.req {
+    		font-size: 120%;
+    		line-height: 1;
+    		color: $red;
+    		vertical-align: bottom;
+    	}
+
+        .tcwlw_label_note {
+            font-size: 85%;
+            display: block;
+        }
+    }
+
+    li label {
+        @include font-size(1);
+    }
+
+    select,
+    textarea,
+    input[type="text"],
+    input[type="password"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="month"],
+    input[type="time"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"] {
+    	background: #f0f0f0;
+        // @include font-size($baseFontSize);
+        font-size: 1.6em !important;
+        line-height: 1.2;
+        color: $grayDarkest;
+        width: 100%;
+        @include margin-bottom($baseSpacing/2);
+        border: 1px solid $grayLight;
+        @include rounded(5px);
+        @include box-shadow(inset 0 2px 2px fade-out(black, 0.85));
+        display: inline-block;
+        vertical-align: middle;
+        @include transition();
+
+        &:focus {
+        	background: white;
+        	@include box-shadow(0 2px 2px fade-out(black, 0.85));
+        	outline: 0;
+            outline: thin dotted \9;
+        }
+
+        &[disabled] {
+            background: $grayLight;
+            color: black;
+            border-color: $gray;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        &.tcwlw_sixcol  {
+            width: 48%;
+        }
+    }
+
+    select,
+    input[type="text"],
+    input[type="password"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="month"],
+    input[type="time"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"] {
+        @include height(2.8125);
+    }
+
+    textarea,
+    input[type="text"],
+    input[type="password"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="month"],
+    input[type="time"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"] {
+        @include padding($baseSpacing/4, $baseSpacing/3);
+    }
+
+    table textarea,
+    table input[type="text"],
+    table input[type="password"],
+    table input[type="datetime"],
+    table input[type="datetime-local"],
+    table input[type="date"],
+    table input[type="month"],
+    table input[type="time"],
+    table input[type="week"],
+    table input[type="number"],
+    table input[type="email"],
+    table input[type="url"],
+    table input[type="search"],
+    table input[type="tel"],
+    table input[type="color"] {
+        @include font-size(1);
+        width: auto;
+    }
+
+    select {
+        line-height: normal !important;
+        @include padding(0.2);
+    }
+
+    option {
+        font-size: inherit;
+        @include padding(0.4);
+    }
+
+    label select {
+        // @include font-size(0.8889);
+        font-size: 0.8889em !important;
+        font-weight: normal;
+    }
+
+    textarea {
+        @include height(5.5);
+        resize: none;
+        overflow: auto;
+    }
+
+    button,
+    input[type="submit"] {
+        @include font-size($baseFontSize);
+    }
+
+    input[type="submit"],
+    button[type="submit"] {
+    	width: 100%;
+    	@include max-width(26);
+    	margin-left: auto;
+    	margin-right: auto;
+    	display: block;
+    }
+
+    label input[type="checkbox"],
+    label input[type="radio"] {
+        @include margin(-0.8, 0.4, 0, 0);
+    }
+
+    .tcwlw_message {
+        background: #f0f0f0;
+        @include font-size($baseFontSize);
+        color: $blue;
+        clear: both;
+        position: relative;
+        width: 100%;
+        @include margin-bottom($baseSpacing/2);
+        @include padding($baseSpacing/4, $baseSpacing/2);
+        display: block;
+        text-align: center;
+
+        i {
+            @include font-size(1.3);
+            line-height: 1;
+            color: inherit;
+            @include margin(0, 0.2);
+            vertical-align: middle;
+        }
+
+        &.tcwlw_error {
+            background: $red;
+            color: white;
+        }
+
+        &.tcwlw_success {
+            background: $green;
+            color: white;
+        }
+    }
+
+    .tcwlw_control_wrapper {
+        clear: both;
+        position: relative;
+        width: 100%;
+        @include margin-bottom($baseSpacing);
+        @include clearfix();
+
+        input,
+        textarea,
+        select {
+            margin-bottom: 0;
+        }
+
+        .tcwlw_message {
+            @include margin($baseSpacing/4, 0, 0);
+        }
+    }
+
+    .tcwlw_inputs_list {
+        padding: 0;
+        list-style: none;
+
+        li {
+            @include margin-bottom($baseSpacing/3);
+            display: block;
+        }
+
+        label {
+            margin: 0;
+        }
+    }
+
+    .tcwlw_dollar_field {
+        position: relative;
+        @include padding-left($baseSpacing/2);
+        display: block;
+        padding-bottom: 0.4em;
+    }
+
+    .tcwlw_dollar_label {
+        font-weight: bold;
+        line-height: 1.2;
+        position: absolute;
+        @include top($baseLineHeight/2);
+        left: 2px;
+    }
+
+    table .tcwlw_dollar_field {
+        max-width: 150px;
+
+        input {
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    // Datepicker
+
+    .pika-single {
+        background: white;
+        font-family: $fontSans;
+        font-size: 1em;
+        color: $grayDarker;
+        float: left;
+        position: relative;
+        right: 0;
+        margin: -10px 10px 0 0;
+        border: 1px solid $grayLighter;
+        display: block;
+        @include box-shadow();
+        z-index: 9999;
+        @include clearfix();
+
+        &.is-hidden {
+            display: none;
+        }
+
+        &.is-bound {
+            position: absolute !important;
+        }
+
+        table {
+            font-size: 1em;
+            margin: 0;
+
+            th {
+                &:last-child {
+                    text-align: center;
+                }
+            }
+        }
+
+        select {
+            @include font-size($baseFontSize*0.875);
+            @include height(2);
+            margin: 0;
+        }
+    }
+
+    .pika-lendar,
+    .pika-time-container {
+        float: left;
+        clear: both;
+        width: 240px;
+    }
+
+    .pika-lendar {
+        margin: 8px;
+    }
+
+    .pika-time-container {
+        margin: 0 8px 8px;
+
+        table {
+            td {
+                padding: 0.1em;
+            }
+        }
+    }
+
+    .pika-title {
+        position: relative;
+        text-align: center;
+
+        select {
+            cursor: pointer;
+            position: absolute;
+            z-index: 9998;
+            margin: 0;
+            left: 0;
+            top: 5px;
+            filter: alpha(opacity=0);
+            opacity: 0;
+        }
+    }
+
+    .pika-label {
+        display: inline-block;
+        *display: inline;
+        position: relative;
+        z-index: 9999;
+        overflow: hidden;
+        margin: 0;
+        padding: 5px 3px;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: bold;
+        background-color: #fff;
+    }
+
+    .pika-prev,
+    .pika-next {
+        display: block;
+        cursor: pointer;
+        position: relative;
+        outline: none;
+        border: 0;
+        padding: 0;
+        width: 20px;
+        height: 30px;
+        text-indent: 20px; // hide text using text-indent trick, using width value (it's enough)
+        white-space: nowrap;
+        overflow: hidden;
+        background-color: transparent;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 75% 75%;
+        opacity: .5;
+        *position: absolute;
+        *top: 0;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &.is-disabled {
+            cursor: default;
+            opacity: .2;
+        }
+    }
+
+    .pika-prev,
+    .is-rtl .pika-next {
+        float: left;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
+        *left: 0;
+    }
+
+    .pika-next,
+    .is-rtl .pika-prev {
+        float: right;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
+        *right: 0;
+    }
+
+    .pika-select {
+        display: inline-block;
+        *display: inline;
+    }
+
+    .pika-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        border: 0;
+
+        th,
+        td {
+            width: 14.285714285714286%;
+            padding: 0;
+        }
+
+        th {
+            color: $grayDarker;
+            font-size: 12px;
+            line-height: 25px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        abbr {
+            border-bottom: none;
+            cursor: help;
+        }
+    }
+
+    .pika-button {
+        cursor: pointer;
+        display: block;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        outline: none;
+        border: 0;
+        margin: 0;
+        width: 100%;
+        padding: 5px;
+        color: $grayDarker;
+        font-size: 12px;
+        line-height: 15px;
+        text-align: right;
+        background: #f0f0f0;
+
+        .is-today & {
+            font-weight: bold;
+        }
+
+        .is-selected & {
+            background: $grayDark;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .is-disabled &,
+        .is-outside-current-month & {
+            pointer-events: none;
+            cursor: default;
+            color: #999;
+            opacity: .3;
+        }
+
+        &:hover {
+            background: $grayDarkest;
+            color: #fff;
+            box-shadow: none;
+        }
+    }
+
+    .pika-week {
+        font-size: 11px;
+        color: $grayDarkest;
+    }
+
+    .is-inrange .pika-button {
+        background: #D5E9F7;
+    }
+
+    .is-startrange .pika-button {
+        color: #fff;
+        background: $green;
+        box-shadow: none;
+        border-radius: 3px;
+    }
+
+    .is-endrange .pika-button {
+        color: #fff;
+        background: #33aaff;
+        box-shadow: none;
+        border-radius: 3px;
+    }
+
+}

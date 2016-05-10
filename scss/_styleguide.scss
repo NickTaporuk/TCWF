@@ -1,0 +1,94 @@
+/***************************************
+
+    #STYLEGUIDE
+
+****************************************/
+
+#tcwlw_widget,
+#tcwlw_widget_outer {
+
+	// Icons - Using Google's Material Design icons, included in the <head>
+
+	.tcwlw_material_icons {
+		@include icons();
+	}
+
+	// Brand Specific
+
+	.tcwlw_font_color {
+		color: $primaryColor;
+	}
+
+	.tcwlw_bg_color {
+		background-color: $secondaryColor;
+	}
+
+	.tcwlw_border_color {
+		border-color: $primaryColor;
+	}
+
+	// Buttons
+
+	.tcwlw_btn {
+		@include button();
+	}
+
+	.tcwlw_brand_btn {
+		@include button($primaryColor);
+	}
+
+	.tcwlw_brand_btn_light {
+		@include button-light($primaryColor);
+	}
+
+	.tcwlw_btn_small {
+		@include font-size($baseFontSize*0.875);
+		@include padding($baseLineHeight/2, $baseLineHeight/1.5);
+
+		i,
+		.tcwlw_material_icons {
+			vertical-align: -3px;
+		}
+	}
+
+	li .tcwlw_btn {
+		@include font-size($baseFontSize);
+	}
+
+	li .tcwlw_btn_small {
+		@include font-size($baseFontSize*0.5475);
+	}
+
+	// Box
+
+	.tcwlw_box,
+	%tcwlw_box {
+		@include box();
+	}
+
+	// Faux Media
+
+	@include tireconnect-width(small) {
+		.tcwlw_btn {
+			@include font-size($baseFontSize);
+		}
+
+		.tcwlw_box,
+		%tcwlw_box {
+			@include padding($baseSpacing/2);
+		}
+	}
+
+	// Media
+
+	@include respond-to(smaller-screen) {
+		.tcwlw_btn {
+			@include font-size($baseFontSize);
+		}
+
+		.tcwlw_box,
+		%tcwlw_box {
+			@include padding($baseSpacing/2);
+		}
+	}
+}
