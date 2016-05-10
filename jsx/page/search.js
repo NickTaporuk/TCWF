@@ -75,6 +75,7 @@ define([
             }
 
             return (
+                
                 <div className={cn('search_wrapper')} id={cn('search_wrapper')}>
                     <div className={cn('search_inner')}>
                         <form id={cn('search_by')} className={cn('search_by')} role="search" onSubmit={this._handleSubmit}>
@@ -272,6 +273,16 @@ define([
                     var str = "";
                     if ( locationId )
                         params.location_id = locationId;
+                    if (params.base_category) {
+                        this.state.fieldOptions.base_category.map(function (baseCat) {
+                            if (baseCat.value == params.base_category) {
+                                params.filters = {};
+                                params.filters.category = baseCat.categories;
+                            }
+                        });
+                        delete params.base_category;
+                    }
+
                     for (var key in params) {
                         if (str != "") {
                             str += "&";
@@ -279,9 +290,7 @@ define([
                         str += key + "=" + encodeURIComponent(params[key]);
                     }
                     var link = window.location.protocol+'//'+redirectUrl +'#!results?'+ str;
-                    console.log('link:',link);
-                    // console.log('this.state:',this.state);
-                    // console.log('lockr.get(location_id):',lockr.get('location_id'));
+
                     window.location.href = link.toString();
 
                 } else {
