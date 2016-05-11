@@ -22,7 +22,7 @@ requirejs.config({
 	}
 });
 
-requirejs(['lodash','baseParams','env',(params.optim ? (settings.scriptPlace + '/js/widget.js') : 'app')],function (_) {
+requirejs(['lodash','baseParams','env',(params.optim ? (params.scriptPlace + '/js/widget.js') : 'app')],function (_) {
 
 	var environ;
 	if(!!localParams) {
@@ -37,7 +37,6 @@ requirejs(['lodash','baseParams','env',(params.optim ? (settings.scriptPlace + '
 		sa			: environ.sa,
 		scriptPlace	: environ.scriptPlace,
 		apiBaseUrl	: environ.apiBaseUrl,
-		// redirectUrl	: window.location.hostname+'/index_dev.html'.toString()
 		redirectUrl	: 'www.tireconnect.ca/new-tireconnect-demo/'
 	});
 });

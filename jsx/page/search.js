@@ -79,10 +79,7 @@ define([
                 <div className={cn('search_wrapper')} id={cn('search_wrapper')}>
                     <div className={cn('search_inner')}>
                         <form id={cn('search_by')} className={cn('search_by')} role="search" onSubmit={this._handleSubmit}>
-                            { this.state.locations.length > 1
-                                ? <a href="#locations" onClick={this._handleLocationsClick} className={cn(['change_location', 'modal_open'])}><i className={cn('material_icons')} dangerouslySetInnerHTML={{ __html: '&#xE0C8;' }} />Change Location</a>
-                                : null
-                            }
+                            { this._location()}
                             <div className={cn('tabs')}>
                                 <ul role="tablist">
                                     {this._tabs()}                                    
@@ -95,6 +92,39 @@ define([
             );
         },
 
+        _location: function(){
+            var self = this,
+                location_select = [];
+            /*return this.state.locations.length > 1
+                ? <a href="#locations" onClick={this._handleLocationsClick} className={cn(['change_location', 'modal_open'])}><i className={cn('material_icons')} dangerouslySetInnerHTML={{ __html: '&#xE0C8;' }} />Change Location</a>
+                : null;*/
+            // console.log('this.state.locations:',this.state.locations);
+            // console.log('this.state.fieldOptions.year:',this.state.fieldOptions.year);
+            console.log('this.state.locations.length:',this.state.locations.length);
+            for(var i = 0;this.state.locations.length > i;i++){
+                console.log('this.state.locations:',this.state.locations[i].address_line_1);
+                // location_select.push({description:this.state.locations[i].address_line_1.toString()+','+this.state.locations[i].address_line_2.toString()+','+this.state.locations[i].city.toString()+','+this.state.locations[i].country.toString(),value:this.state.locations[i].id.toString()});
+                location_select.push({description:this.state.locations[i].address_line_1.toString(),value:this.state.locations[i].id.toString()});
+            }
+/*            this.state.locations.forEach(function(item,i,arr){
+                console.log('item:',item, 'i:',i,'arr',arr);
+                // location_select
+                location_select.push({description:item.id.toString(),value:item.id.toString()});
+            });*/
+
+
+            console.log('location_select:',location_select);
+            /*this.setState({
+                location_select: item.
+            });*/
+            console.log('this.state.fieldValues.vehicle.year:',this.state.fieldValues.vehicle.year);
+
+            return <SelectField
+                options={location_select}
+                value={location_select[0].id} onChange={this._handleLocationChange}
+                name="" label="Choose Location"
+                className={cn(['field'])} required={true} />
+        },
         _tabs: function() {
             var tabs = [
                 <li key={1} className={cn('tab')} role="presentation">
@@ -115,12 +145,13 @@ define([
         },
 
         _tabsContent: function() {
-
+            console.log('this.state.fieldOptions.year:',this.state.fieldOptions.year);
             var contents = [
+
                 <div key={1} className={cn(['tab_cont', 'search_fields', 'by_vehicle_tab'])} id={cn('by_vehicle_tab')} role="tabpanel" tabIndex="0" aria-hidden={this.state.activeTab !== 'vehicle'}>
                     <fieldset className={cn('fields_wrapper')}>
                         <div className={cn(['sixcol', 'fields_wrapper_1'])}>
-                            <SelectField 
+                            <SelectField
                                         options={this.state.fieldOptions.year}
                                         value={this.state.fieldValues.vehicle.year} onChange={this._handleVehicleChange}
                                         name="year" label="Choose Year"
@@ -250,24 +281,6 @@ define([
 
             if (this._isReadyForSearch()) {
                 if ( locationId ) {
-/*                    params.location_id = locationId;
-
-                    if (params.base_category) {
-                        this.state.fieldOptions.base_category.map(function (baseCat) {
-                            if (baseCat.value == params.base_category) {
-                                params.filters = {};
-                                params.filters.category = baseCat.categories;
-                            }
-                        });
-                        delete params.base_category;
-                    }
-
-                    A.route('results', params);*/
-/*
-                    var params = _.cloneDeep(this.state.fieldValues[this.state.activeTab]);
-                    var locationId = lockr.get('location_id');
-*/
-                    // console.log('params:',params,'config:',config);
 
                     var redirectUrl = config.redirectUrl;
                     var str = "";
@@ -330,6 +343,11 @@ define([
                 self._updateVehicleOptions(options, values);
             });
         },
+        _handleLocationChange: function(e) {
+            // console.log('e.target.value:',e.target.value);
+            lockr.set('location_id', e.target.value);
+
+        },
 
         _updateVehicleOptions: function(newOptions, newValues) {
             var fieldOptions = _.cloneDeep(this.state.fieldOptions);
@@ -354,7 +372,6 @@ define([
             if (event) {
                 event.preventDefault();
             }
-
             A.popup.show(
                 'Please select a preferred location:',
                 <Locations

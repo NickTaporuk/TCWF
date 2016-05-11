@@ -245,7 +245,7 @@ define([
             if (values.year) {
                 promises.push(ajax.make({
                     url: 'vehicle/makes',
-                    data: values,
+                    data: {year: values.year},
                     cache: true
                 }).then(function(response) {
                     allOptions.make = prepareVehicleResponse(response);
