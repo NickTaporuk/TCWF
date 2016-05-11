@@ -35,7 +35,8 @@ define([
                     vehicle: {year: '', make: '', model: '', trim: '', car_tire_id: '', base_category: ''},
                     size: {width: '', height: '', rim: '', load_index: '', speed_rating: '', base_category: ''},
                     part_number: {part_number: ''}
-                }
+                },
+                selectState: false
             }
         },
 
@@ -98,26 +99,15 @@ define([
             /*return this.state.locations.length > 1
                 ? <a href="#locations" onClick={this._handleLocationsClick} className={cn(['change_location', 'modal_open'])}><i className={cn('material_icons')} dangerouslySetInnerHTML={{ __html: '&#xE0C8;' }} />Change Location</a>
                 : null;*/
-            // console.log('this.state.locations:',this.state.locations);
-            // console.log('this.state.fieldOptions.year:',this.state.fieldOptions.year);
-            console.log('this.state.locations.length:',this.state.locations.length);
             for(var i = 0;this.state.locations.length > i;i++){
-                console.log('this.state.locations:',this.state.locations[i].address_line_1);
-                // location_select.push({description:this.state.locations[i].address_line_1.toString()+','+this.state.locations[i].address_line_2.toString()+','+this.state.locations[i].city.toString()+','+this.state.locations[i].country.toString(),value:this.state.locations[i].id.toString()});
-                location_select.push({description:this.state.locations[i].address_line_1.toString(),value:this.state.locations[i].id.toString()});
+                var str = [];
+                if(!!this.state.locations[i].address_line_1)str.push(this.state.locations[i].address_line_1);
+                if(!!this.state.locations[i].address_line_2)str.push(this.state.locations[i].address_line_2);
+                if(!!this.state.locations[i].city)str.push(this.state.locations[i].city);
+                if(!!this.state.locations[i].country)str.push(this.state.locations[i].country);
+                str = str.join(',').toString();
+                location_select.push({description:str,value:this.state.locations[i].id.toString()});
             }
-/*            this.state.locations.forEach(function(item,i,arr){
-                console.log('item:',item, 'i:',i,'arr',arr);
-                // location_select
-                location_select.push({description:item.id.toString(),value:item.id.toString()});
-            });*/
-
-
-            console.log('location_select:',location_select);
-            /*this.setState({
-                location_select: item.
-            });*/
-            console.log('this.state.fieldValues.vehicle.year:',this.state.fieldValues.vehicle.year);
 
             return <SelectField
                 options={location_select}
