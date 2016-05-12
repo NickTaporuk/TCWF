@@ -81,10 +81,10 @@ window.TCWidgetForm = {
                         container
                     );
 
-                    ReactDOM.render(
+                    /*ReactDOM.render(
                         React.createElement(Overlay),
                         self.overlayNode
-                    );
+                    );*/
                 };
 
                 render();

@@ -36,7 +36,27 @@ define([
                     size: {width: '', height: '', rim: '', load_index: '', speed_rating: '', base_category: ''},
                     part_number: {part_number: ''}
                 },
-                selectState: false
+                fieldNamesSelect: {
+                    vehicle: {  year            : {text : "Choose Year",    name : "Choose Year",     state : false,    changeLabel : 'make'},
+                                make            : {text : 'Choose Make',    name : "Choose Make",     state : false,    changeLabel : 'model'},
+                                model           : {text : 'Choose Model',   name : "Choose Model",    state : false,    changeLabel : 'trim'},
+                                trim            : {text : 'Choose Trim',    name : "Choose Trim",     state : false,    changeLabel : 'car_tire_id'},
+                                car_tire_id     : {text : 'Tire Size',      name : "Tire Size",       state : false,    changeLabel : 'base_category'},
+                                base_category   : {text : 'Tire Category',  name : "Tire Category",   state : false,    changeLabel : 'base_category'}
+                        },
+                    size: {
+                                size_width           : {text : "Choose Width",   name : "Choose Width",      state : false,    changeLabel : 'size_height'},
+                                size_height          : {text : "Choose Height",  name : "Choose Height",     state : false,    changeLabel : 'size_rim'},
+                                size_rim             : {text : "Choose Rim",     name : "Choose Rim",        state : false,    changeLabel : 'size_load_index'},
+                                size_load_index      : {text : "Speed Rating",   name : "Speed Rating",      state : false,    changeLabel : 'size_speed_rating'},
+                                size_speed_rating    : {text : "Load Index",     name : "Load Index",        state : false,    changeLabel : 'size_base_category'},
+                                size_base_category   : {text : "Tire Category",  name : "Tire Category",     state : false,    changeLabel : 'size_base_category'}
+                        },
+                    part_number: {
+                                part_number     : ''
+                        }
+                },
+                SpinnerText: "Loading ..."
             }
         },
 
@@ -49,6 +69,7 @@ define([
 
         componentDidMount: function() {
             var self = this;
+            console.log('componentDidMount self',self);
             if (!this.state.ready) {
                 Promise.all([
                     Api.loadTireParameters(),
@@ -69,7 +90,17 @@ define([
         componentWillUnmount: function () {
             appStore.savePageState(this);
         },
-        
+/*        shouldComponentUpdate: function() {
+            // you don't have to do this check first, but some times it helps prevent against an unneeded render.
+            console.log('newProps:');
+            /!*if (newProps.startTime != this.state.startTime) {
+                this.setState({startTime: newProps.startTime});
+            }*!/
+            return true ;
+        },
+        componentDidUpdate: function (prevProps,prevState) {
+            console.log('prevProps:',prevProps,'prevState:',prevState);
+        },*/
         render: function() {
             if (!this.state.ready) {
                 return null;
@@ -93,18 +124,18 @@ define([
             );
         },
 
-        _location: function(){
+        _location: function() {
             var self = this,
                 location_select = [];
             /*return this.state.locations.length > 1
                 ? <a href="#locations" onClick={this._handleLocationsClick} className={cn(['change_location', 'modal_open'])}><i className={cn('material_icons')} dangerouslySetInnerHTML={{ __html: '&#xE0C8;' }} />Change Location</a>
                 : null;*/
-            for(var i = 0;this.state.locations.length > i;i++){
+            for(var i = 0;this.state.locations.length > i;i++) {
                 var str = [];
-                if(!!this.state.locations[i].address_line_1)str.push(this.state.locations[i].address_line_1);
-                if(!!this.state.locations[i].address_line_2)str.push(this.state.locations[i].address_line_2);
-                if(!!this.state.locations[i].city)str.push(this.state.locations[i].city);
-                if(!!this.state.locations[i].country)str.push(this.state.locations[i].country);
+                if(!!this.state.locations[i].address_line_1)    str.push(this.state.locations[i].address_line_1);
+                if(!!this.state.locations[i].address_line_2)    str.push(this.state.locations[i].address_line_2);
+                if(!!this.state.locations[i].city)              str.push(this.state.locations[i].city);
+                if(!!this.state.locations[i].country)           str.push(this.state.locations[i].country);
                 str = str.join(',').toString();
                 location_select.push({description:str,value:this.state.locations[i].id.toString()});
             }
@@ -135,7 +166,6 @@ define([
         },
 
         _tabsContent: function() {
-            console.log('this.state.fieldOptions.year:',this.state.fieldOptions.year);
             var contents = [
 
                 <div key={1} className={cn(['tab_cont', 'search_fields', 'by_vehicle_tab'])} id={cn('by_vehicle_tab')} role="tabpanel" tabIndex="0" aria-hidden={this.state.activeTab !== 'vehicle'}>
@@ -144,37 +174,37 @@ define([
                             <SelectField
                                         options={this.state.fieldOptions.year}
                                         value={this.state.fieldValues.vehicle.year} onChange={this._handleVehicleChange}
-                                        name="year" label="Choose Year"
+                                        name="year" label={this.state.fieldNamesSelect.vehicle.year.text}
                                         className={cn(['field'])} required={true} />
                             <SelectField 
                                         options={this.state.fieldOptions.make}
                                         value={this.state.fieldValues.vehicle.make} onChange={this._handleVehicleChange}
-                                        name="make" label="Choose Make" required={true}
+                                        name="make" label={this.state.fieldNamesSelect.vehicle.make.text} required={true}
                                         className={cn(['field'])} disabled={this.state.fieldOptions.make.length <= 0} />
                             <SelectField 
                                         options={this.state.fieldOptions.model}
                                         defaultValue={this.state.fieldValues.vehicle.model} onChange={this._handleVehicleChange}
-                                        name="model" label="Choose Model"
+                                        name="model" label={this.state.fieldNamesSelect.vehicle.model.text}
                                         className={cn(['field'])} disabled={this.state.fieldOptions.model.length <= 0} required="1" />
                         </div>
                         <div className={cn(['sixcol', 'last', 'fields_wrapper_2'])}>
                             <SelectField 
                                         options={this.state.fieldOptions.trim}
                                         value={this.state.fieldValues.vehicle.trim} onChange={this._handleVehicleChange}
-                                        name="trim" label="Choose Trim"
+                                        name="trim" label={this.state.fieldNamesSelect.vehicle.trim.text}
                                         className={cn(['field'])} disabled={this.state.fieldOptions.trim.length <= 0} required="1" />
                             <SelectField 
                                         options={this.state.fieldOptions.car_tire_id}
                                         value={this.state.fieldValues.vehicle.car_tire_id} onChange={this._handleFieldChange}
-                                        name="car_tire_id" label="Tire Size"
+                                        name="car_tire_id" label={this.state.fieldNamesSelect.vehicle.car_tire_id.text}
                                         className={cn(['field'])} disabled={this.state.fieldOptions.car_tire_id.length <= 0} required="1" emptyDesc={false}/>
                             <SelectField 
                                         options={this.state.fieldOptions.base_category}
                                         value={this.state.fieldValues.vehicle.base_category} onChange={this._handleFieldChange}
-                                        name="vehicle_base_category" label="Tire Category"
+                                        name="vehicle_base_category" label={this.state.fieldNamesSelect.vehicle.base_category.text}
                                         className={cn(['field'])} emptyDesc="All Tires" />
                         </div>
-                        
+
                         <button type="submit" disabled={!this._isReadyForSearch()} className={cn(['btn', 'brand_btn'])}><i className={cn('material_icons')} dangerouslySetInnerHTML={{ __html: '&#xE8B6;' }} /> Find Your Tires</button>
                     </fieldset>
                 </div>,
@@ -184,34 +214,34 @@ define([
                             <SelectField 
                                         options={this.state.fieldOptions.width}
                                         value={this.state.fieldValues.size.width} onChange={this._handleFieldChange}
-                                        name="size_width" label="Choose Width"  
+                                        name="size_width" label={this.state.fieldNamesSelect.size.size_width.text}
                                         className={cn(['field'])} required="1" />
                             <SelectField 
                                         options={this.state.fieldOptions.height}        
                                         value={this.state.fieldValues.size.height} onChange={this._handleFieldChange}  
-                                        name="size_height" label="Choose Height" required="1" 
+                                        name="size_height" label={this.state.fieldNamesSelect.size.size_height.text} required="1"
                                         className={cn(['last', 'field'])} />
                             <SelectField 
                                         options={this.state.fieldOptions.rim}           
                                         value={this.state.fieldValues.size.rim} onChange={this._handleFieldChange} 
-                                        name="size_rim" label="Choose Rim"    
+                                        name="size_rim" label={this.state.fieldNamesSelect.size.size_rim.text}
                                         className={cn(['field'])} required="1" />
                         </div>
                         <div className={cn(['sixcol', 'last', 'fields_wrapper_2'])}>
                             <SelectField 
                                         options={this.state.fieldOptions.speed_rating} 
                                         value={this.state.fieldValues.size.speed_rating} onChange={this._handleFieldChange} 
-                                        name="size_speed_rating" label="Speed Rating" 
+                                        name="size_speed_rating" label={this.state.fieldNamesSelect.size.size_speed_rating.text}
                                         className={cn(['field'])}  />
                             <SelectField 
                                         options={this.state.fieldOptions.load_index} 
                                         value={this.state.fieldValues.size.load_index} onChange={this._handleFieldChange} 
-                                        name="size_load_index" label="Load Index" 
+                                        name="size_load_index" label={this.state.fieldNamesSelect.size.size_load_index.text}
                                         className={cn(['last', 'field'])} />
                             <SelectField 
                                         options={this.state.fieldOptions.base_category} 
                                         value={this.state.fieldValues.size.base_category} onChange={this._handleFieldChange} 
-                                        name="size_base_category" label="Tire Category"
+                                        name="size_base_category" label={this.state.fieldNamesSelect.size.size_base_category.text}
                                         className={cn(['last', 'field'])} emptyDesc="All Tires" />
                         </div>
 
@@ -290,10 +320,19 @@ define([
                         if (str != "") {
                             str += "&";
                         }
-                        str += key + "=" + encodeURIComponent(params[key]);
+                        if( !!params[key].category && typeof params[key].category === 'object') {
+                            // for(var i = 0;params[key].category.length > 0;i++) {
+                            for(keys in params[key].category) {
+                                if (str != "") {
+                                    str += "&";
+                                }
+                                str += encodeURIComponent(key + "=" + params[key].category[keys]);
+                            }
+                            continue;
+                        }
+                            str += key + "=" + encodeURIComponent(params[key]);
                     }
                     var link = window.location.protocol+'//'+redirectUrl +'#!results?'+ str;
-
                     window.location.href = link.toString();
 
                 } else {
@@ -307,12 +346,35 @@ define([
 
             var fieldValues = _.cloneDeep(this.state.fieldValues);
             fieldValues[this.state.activeTab][fieldName] = event.target.value;
+
+            var fieldNames = _.cloneDeep(this.state.fieldNamesSelect);
+
+            if(!!fieldNames.size[event.target.name]) {
+                var changeLabel = fieldNames.size[event.target.name].changeLabel.toString();
+                fieldNames.size[changeLabel].text = this.state.SpinnerText;
+                fieldNames.size[changeLabel].state = true;
+            }
+
             this.setState({
                 fieldValues: fieldValues
+                // ,fieldNamesSelect : fieldNames
             });
         },
 
         _handleVehicleChange: function(event) {
+            console.log('_handleVehicleChange event:',event.target.name);
+            // select label text change
+            var fieldNames = _.cloneDeep(this.state.fieldNamesSelect);
+            console.log('fieldNames.size[event.target.name]:',fieldNames.size[event.target.name]);
+            // console.log('changeLabel;',changeLabel);
+            if(!!fieldNames.vehicle[event.target.name]) {
+                var changeLabel = fieldNames.vehicle[event.target.name].changeLabel.toString();
+                fieldNames.vehicle[changeLabel].text = this.state.SpinnerText;
+                fieldNames.vehicle[changeLabel].state = true;
+            }
+            this.setState({
+                fieldNamesSelect : fieldNames
+            });
             var self = this;
 
             var fields = ['year', 'make', 'model', 'trim'];
@@ -328,13 +390,13 @@ define([
                 model: index < 2 ? '' : values.model,
                 trim: index < 3 ? '' : values.trim
             };
+            // console.log('_handleVehicleChange this.state:',this.state);
 
             Api.loadVehicleOptions(values).then(function(options) {
                 self._updateVehicleOptions(options, values);
             });
         },
         _handleLocationChange: function(e) {
-            // console.log('e.target.value:',e.target.value);
             lockr.set('location_id', e.target.value);
 
         },
@@ -346,15 +408,39 @@ define([
             if (newOptions.car_tire_id[0]) {
                 fieldValues.vehicle.car_tire_id = newOptions.car_tire_id[0].value;
             }
+
+            var fieldNames = _.cloneDeep(this.state.fieldNamesSelect);
+
+            // console.log('fieldNames:',fieldNames);
+            for (key in fieldNames) {
+                for(keys in fieldNames[key]) {
+                    if(typeof fieldNames[key][keys] === 'object' && fieldNames[key][keys].state === true) {
+                        // console.log(key,keys,fieldNames[key][keys].state );
+                        fieldNames[key][keys].state = false;
+                        fieldNames[key][keys].text = fieldNames[key][keys].name;
+                    }
+                }
+                /*console.log(fieldNames[key].map(function (name) {
+
+                }));*/
+            }
+            /*              fieldNames.vehicle[event.target.name].text = fieldNames.vehicle[event.target.name].name;*/
+/*
+            var nameLengths = fieldNames.map(function(name) {
+                return name.length;
+            });
+            console.log('nameLengths:',nameLengths);
+*/
             this.setState({
                 fieldOptions: _.assign(fieldOptions, newOptions),
                 fieldValues: fieldValues
+                , fieldNamesSelect : fieldNames
             });
         },
 
         _handleLocationSelect: function (locationId) {
             lockr.set('location_id', locationId);
-            A.popup.close();
+            // A.popup.close();
             this._handleSubmit();
         },
 
@@ -362,14 +448,14 @@ define([
             if (event) {
                 event.preventDefault();
             }
-            A.popup.show(
+            /*A.popup.show(
                 'Please select a preferred location:',
                 <Locations
                     locations={this.state.locations}
                     location_id={lockr.get('location_id')}
                     onSelect={this._handleLocationSelect} />,
                 'locations'
-            );
+            );*/
         }
     }
 
