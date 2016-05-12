@@ -403,11 +403,9 @@ define([
 
             var fieldNames = _.cloneDeep(this.state.fieldNamesSelect);
 
-            // console.log('fieldNames:',fieldNames);
             for (key in fieldNames) {
                 for(keys in fieldNames[key]) {
                     if(typeof fieldNames[key][keys] === 'object' && fieldNames[key][keys].state === true) {
-                        // console.log(key,keys,fieldNames[key][keys].state );
                         fieldNames[key][keys].state = false;
                         fieldNames[key][keys].text = fieldNames[key][keys].name;
                     }

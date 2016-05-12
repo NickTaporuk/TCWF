@@ -13,13 +13,14 @@
       var pathParts = window.location.pathname.split('/');
       var isSA = pathParts[1] && pathParts[1] == 'instore';
       var apiKey = pathParts[2] ? pathParts[2] : '';
-
-      TCWidget.init({
-          apikey: apiKey,
-          container: 'content',
-          sa: isSA,
-          scriptPlace: 'http://yadro.wlwidget.savetopic.net',
-          apiBaseUrl: 'https://dev.tireconnect.ca/api2.php/'
+//    console.log('pathParts:',pathParts,apiKey);
+      TCWidgetForm.init({
+          apikey        : '9c1fa27907c8d18be1f2a0a7cfbec3e2',
+          container     : 'content',
+          sa            : isSA,
+          scriptPlace   : 'http://tcwidget.dev',
+          apiBaseUrl    : 'https://dev.tireconnect.ca/api2.php/',
+          redirectUrl   : 'www.tireconnect.ca/new-tireconnect-demo/'
       });
     </script>
   </body>
