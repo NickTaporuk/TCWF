@@ -90,17 +90,7 @@ define([
         componentWillUnmount: function () {
             appStore.savePageState(this);
         },
-/*        shouldComponentUpdate: function() {
-            // you don't have to do this check first, but some times it helps prevent against an unneeded render.
-            console.log('newProps:');
-            /!*if (newProps.startTime != this.state.startTime) {
-                this.setState({startTime: newProps.startTime});
-            }*!/
-            return true ;
-        },
-        componentDidUpdate: function (prevProps,prevState) {
-            console.log('prevProps:',prevProps,'prevState:',prevState);
-        },*/
+
         render: function() {
             if (!this.state.ready) {
                 return null;
@@ -127,9 +117,6 @@ define([
         _location: function() {
             var self = this,
                 location_select = [];
-            /*return this.state.locations.length > 1
-                ? <a href="#locations" onClick={this._handleLocationsClick} className={cn(['change_location', 'modal_open'])}><i className={cn('material_icons')} dangerouslySetInnerHTML={{ __html: '&#xE0C8;' }} />Change Location</a>
-                : null;*/
             for(var i = 0;this.state.locations.length > i;i++) {
                 var str = [];
                 if(!!this.state.locations[i].address_line_1)    str.push(this.state.locations[i].address_line_1);
@@ -317,20 +304,26 @@ define([
                     }
 
                     for (var key in params) {
-                        if (str != "") {
-                            str += "&";
-                        }
+
                         if( !!params[key].category && typeof params[key].category === 'object') {
-                            // for(var i = 0;params[key].category.length > 0;i++) {
+                            var i=0;
                             for(keys in params[key].category) {
                                 if (str != "") {
                                     str += "&";
                                 }
-                                str += encodeURIComponent(key + "=" + params[key].category[keys]);
+                                if(!!params[key].category[keys])
+                                str += encodeURIComponent(key + "[category]["+i+"]") +'='+ params[key].category[keys];
+                                console.log('str:',str);
+                                i++;
                             }
-                            continue;
-                        }
+
+                        } else {
+                            if(!!!params[key]) continue;
+                            if (str != "") {
+                                str += "&";
+                            }
                             str += key + "=" + encodeURIComponent(params[key]);
+                        }
                     }
                     var link = window.location.protocol+'//'+redirectUrl +'#!results?'+ str;
                     window.location.href = link.toString();
@@ -357,7 +350,6 @@ define([
 
             this.setState({
                 fieldValues: fieldValues
-                // ,fieldNamesSelect : fieldNames
             });
         },
 
@@ -420,17 +412,8 @@ define([
                         fieldNames[key][keys].text = fieldNames[key][keys].name;
                     }
                 }
-                /*console.log(fieldNames[key].map(function (name) {
-
-                }));*/
             }
-            /*              fieldNames.vehicle[event.target.name].text = fieldNames.vehicle[event.target.name].name;*/
-/*
-            var nameLengths = fieldNames.map(function(name) {
-                return name.length;
-            });
-            console.log('nameLengths:',nameLengths);
-*/
+
             this.setState({
                 fieldOptions: _.assign(fieldOptions, newOptions),
                 fieldValues: fieldValues
@@ -448,14 +431,6 @@ define([
             if (event) {
                 event.preventDefault();
             }
-            /*A.popup.show(
-                'Please select a preferred location:',
-                <Locations
-                    locations={this.state.locations}
-                    location_id={lockr.get('location_id')}
-                    onSelect={this._handleLocationSelect} />,
-                'locations'
-            );*/
         }
     }
 
