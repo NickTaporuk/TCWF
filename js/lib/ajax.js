@@ -173,9 +173,17 @@ define(['config', 'promise'], function(config, Promise) {
 			return ajaxCounter > 0;
 		};
 
-		this.make = function(params) {
-			var url = config.apiBaseUrl + params.url + (/\?/.test(params.url) ? '&' : '?') + 'key=' + config.apikey + (config.sessionId ? '&session_id=' + config.sessionId : '');
-			var a;
+        /**
+         *
+         * @param params
+         * @param state
+         * @returns {module:promise}
+         */
+		this.make = function(params,state) {
+            var url;
+            if(state)  {(url = params.url)} else { url = config.apiBaseUrl + params.url + (/\?/.test(params.url) ? '&' : '?') + 'key=' + config.apikey + (config.sessionId ? '&session_id=' + config.sessionId : '')};
+
+            var a;
 
 			self.beforeSend();
 			ajaxCounter++;

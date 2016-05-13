@@ -62,7 +62,8 @@ define([
                 },
                 SpinnerText: "Loading ...",
                 locationDetectState : false ,     // boolean variable is responsible for visualization determine the user's location
-                locations : false
+                locations : false,
+                geolocationObj: {}
             }
         },
 
@@ -145,9 +146,21 @@ define([
         },
         _handlePostalCode: function(postalCode){
             console.log('postalCode111:',postalCode);
+            var self = this;
 
-            if(postalCode) {
-                
+            if(typeof postalCode !== undefined) {
+                Promise.all([
+                    Api.loadPostalLocations(postalCode)
+                ]).then(function (response) {
+                    console.log('_handlePostalCode loadPostalLocations response:',response[0].results[0].geometry.location);
+                    var pos = response[0].results[0].geometry.location;
+                        pos.radius = 200000000;
+                    // console.log('_handlePostalCode loadPostalLocations response pos:',pos);
+                    // Api.loadLocation(pos);
+                    self.setState({
+                        geolocationObj: pos
+                    });
+                });
             }
         },
         _tabs: function() {

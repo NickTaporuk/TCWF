@@ -114,11 +114,10 @@ define([
         loadPostalLocations: function(postalCode) {
 
             return ajax.make({
-                data: {address:postalCode},
-                url: 'http://maps.googleapis.com/maps/api/geocode/json?address=90001',
+                url: 'http://maps.googleapis.com/maps/api/geocode/json?address='+postalCode,
                 cache: true
-            }).then(function(response) {
-                return response.data.locations;
+            },true).then(function(response) {
+                return response;
             });
         },
 
