@@ -1,4 +1,7 @@
 // Start the main app logic.
+/**
+ * @type {{apikey: string, scriptPlace: string, apiBaseUrl: string}}
+ */
 var params = {
     apikey: 'cbc3d812f6d6ede9b34278d8b6532c59',
     scriptPlace: 'https://dev.tireconnect.ca/app',

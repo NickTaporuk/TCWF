@@ -59,32 +59,33 @@ window.TCWidgetForm = {
                 }
             });
 
-            requirejs(['react', 'reactDOM', 'load!components/wrapper', 'load!actions/act', 'load!components/overlay', 'classnames', 'actions/api'], 
-            function(React, ReactDOM, Wrapper, Act, Overlay, cn, Api) {
-                
+            requirejs([
+                'react',
+                'reactDOM',
+                'load!components/wrapper',
+                'load!actions/act',
+                // 'load!components/overlay',
+                'classnames',
+                'actions/api'],
+            function(
+                React,
+                ReactDOM,
+                Wrapper,
+                Act,
+                // Overlay,
+                cn,
+                Api
+            ) {
+
                 var render = function() {
                     var container = document.getElementById(params.container);
 
-                    if (!self.overlayNode) {
-                        // append overlays (popup/message/loading/shadow) to the end of body
-                        var body = document.getElementsByTagName('body')[0];
-                        self.overlayNode = document.createElement("div");
-                        self.overlayNode.id = cn('widget_outer');
-                        body.appendChild(self.overlayNode);
-                    }
-
                     ReactDOM.unmountComponentAtNode(container); // needed if init has been called again
-                    ReactDOM.unmountComponentAtNode(self.overlayNode); // needed if init has been called again
 
                     ReactDOM.render(
                         React.createElement(Wrapper),
                         container
                     );
-
-                    /*ReactDOM.render(
-                        React.createElement(Overlay),
-                        self.overlayNode
-                    );*/
                 };
 
                 render();
@@ -100,4 +101,4 @@ window.TCWidgetForm = {
             });
         });
     }
-}
+};

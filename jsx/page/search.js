@@ -9,7 +9,9 @@ define([
     'load!stores/appStore',
     'promise',
     'lodash',
-    'lockr'
+    'lockr',
+    'load!components/elements/postal_code',
+
 ], function(
     React,
     cn,
@@ -21,12 +23,14 @@ define([
     appStore,
     Promise,
     _,
-    lockr
+    lockr,
+    PostalCode
 ) {
     return {
         displayName: 'search',
 
         getInitialState: function() {
+
             return  {
                 ready: false,
                 activeTab: 'size',
@@ -56,7 +60,9 @@ define([
                                 part_number     : ''
                         }
                 },
-                SpinnerText: "Loading ..."
+                SpinnerText: "Loading ...",
+                locationDetectState : false ,     // boolean variable is responsible for visualization determine the user's location
+                locations : false
             }
         },
 
@@ -69,19 +75,16 @@ define([
 
         componentDidMount: function() {
             var self = this;
-            console.log('componentDidMount self',self);
+            var pos = {};
             if (!this.state.ready) {
                 Promise.all([
                     Api.loadTireParameters(),
                     Api.loadVehicleOptions(),
-                    Api.loadLocations(),
-                    Api.loadDealerConfig()
                 ]).then(function (response) {
                     self.setState({
                         ready: true,
                         fieldOptions: _.merge(response[0], response[1]),
-                        locations: response[2],
-                        activeTab: response[3].default_searching ? response[3].default_searching.replace('by_', '') : 'vehicle'
+                        activeTab: 'vehicle'
                     });
                 });
             }
@@ -100,8 +103,9 @@ define([
                 
                 <div className={cn('search_wrapper')} id={cn('search_wrapper')}>
                     <div className={cn('search_inner')}>
+                        { this._location()}
+
                         <form id={cn('search_by')} className={cn('search_by')} role="search" onSubmit={this._handleSubmit}>
-                            { this._location()}
                             <div className={cn('tabs')}>
                                 <ul role="tablist">
                                     {this._tabs()}                                    
@@ -115,23 +119,36 @@ define([
         },
 
         _location: function() {
-            var self = this,
-                location_select = [];
-            for(var i = 0;this.state.locations.length > i;i++) {
-                var str = [];
-                if(!!this.state.locations[i].address_line_1)    str.push(this.state.locations[i].address_line_1);
-                if(!!this.state.locations[i].address_line_2)    str.push(this.state.locations[i].address_line_2);
-                if(!!this.state.locations[i].city)              str.push(this.state.locations[i].city);
-                if(!!this.state.locations[i].country)           str.push(this.state.locations[i].country);
-                str = str.join(',').toString();
-                location_select.push({description:str,value:this.state.locations[i].id.toString()});
-            }
+            console.log('_location this.state.locations : ',this.state.locations);
+            if(this.state.locations.length > 0) {
+                var self = this,
+                    location_select = [];
+                // console.log('this.state.locations:',this.state.locations);
+                for(var i = 0;this.state.locations.length > i;i++) {
+                    var str = [];
+                    if(!!this.state.locations[i].address_line_1)    str.push(this.state.locations[i].address_line_1);
+                    if(!!this.state.locations[i].address_line_2)    str.push(this.state.locations[i].address_line_2);
+                    if(!!this.state.locations[i].city)              str.push(this.state.locations[i].city);
+                    if(!!this.state.locations[i].country)           str.push(this.state.locations[i].country);
+                    str = str.join(',').toString();
+                    location_select.push({description:str,value:this.state.locations[i].id.toString()});
+                }
+                //TODO:commit select location state
+                // location_select.push({description:1,value:1});
 
-            return <SelectField
-                options={location_select}
-                value={location_select[0].id} onChange={this._handleLocationChange}
-                name="" label="Choose Location"
-                className={cn(['field'])} required={true} />
+                return <SelectField
+                    options={location_select}
+                    value={location_select[0].id} onChange={this._handleLocationChange}
+                    name="" label="Choose Location"
+                    className={cn(['field'])} required={true} />
+            } else return <PostalCode postalcode={this._handlePostalCode}/> ;
+        },
+        _handlePostalCode: function(postalCode){
+            console.log('postalCode111:',postalCode);
+
+            if(postalCode) {
+                
+            }
         },
         _tabs: function() {
             var tabs = [
@@ -278,13 +295,41 @@ define([
                 activeTab: tab
             });
         },
+        _locationDetect:function () {
+            console.log('_locationDetect:');
+            var self = this,
+                pos = {};
 
+            if(window.location.protocol === 'http:' && window.navigator.userAgent.match(/Chrome\/5\d+/i) !== null) {
+                this.setState({
+                    locationDetectState : true
+                });
+            } else if (!!window.navigator.geolocation ) {
+                window.navigator.geolocation.getCurrentPosition(function (position) {
+
+                    pos.lat = position.coords.latitude;
+                    pos.lng = position.coords.longitude;
+                    pos.radius = 2000000000;
+                    Promise.all([
+                        Api.loadLocations(pos)
+                    ]).then(function (response) {
+                        console.log('response:',response);
+                        self.setState({
+                            locations: response
+                        });
+                    });
+                });
+            }
+
+        },
         _handleSubmit: function(event) {
+            var self        = this;
             if (event) {
                 event.preventDefault();
             }
             var params = _.cloneDeep(this.state.fieldValues[this.state.activeTab]);
             var locationId = lockr.get('location_id');
+            this._locationDetect();
 
             if (this._isReadyForSearch()) {
                 if ( locationId ) {
@@ -316,7 +361,6 @@ define([
                                 console.log('str:',str);
                                 i++;
                             }
-
                         } else {
                             if(!!!params[key]) continue;
                             if (str != "") {
@@ -326,10 +370,9 @@ define([
                         }
                     }
                     var link = window.location.protocol+'//'+redirectUrl +'#!results?'+ str;
+                    console.log('this.state.locations:',this.state.locations);
                     window.location.href = link.toString();
 
-                } else {
-                    this._handleLocationsClick();    
                 }
             }
         },
@@ -354,11 +397,8 @@ define([
         },
 
         _handleVehicleChange: function(event) {
-            console.log('_handleVehicleChange event:',event.target.name);
             // select label text change
             var fieldNames = _.cloneDeep(this.state.fieldNamesSelect);
-            console.log('fieldNames.size[event.target.name]:',fieldNames.size[event.target.name]);
-            // console.log('changeLabel;',changeLabel);
             if(!!fieldNames.vehicle[event.target.name]) {
                 var changeLabel = fieldNames.vehicle[event.target.name].changeLabel.toString();
                 fieldNames.vehicle[changeLabel].text = this.state.SpinnerText;
@@ -382,7 +422,6 @@ define([
                 model: index < 2 ? '' : values.model,
                 trim: index < 3 ? '' : values.trim
             };
-            // console.log('_handleVehicleChange this.state:',this.state);
 
             Api.loadVehicleOptions(values).then(function(options) {
                 self._updateVehicleOptions(options, values);
@@ -390,7 +429,6 @@ define([
         },
         _handleLocationChange: function(e) {
             lockr.set('location_id', e.target.value);
-
         },
 
         _updateVehicleOptions: function(newOptions, newValues) {

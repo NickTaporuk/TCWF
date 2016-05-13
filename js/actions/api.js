@@ -100,9 +100,22 @@ define([
 
 
     Api = {
-        loadLocations: function() {
+        loadLocations: function(pos) {
+
             return ajax.make({
-                url: 'location/list',
+                method: 'post',
+                data: {latitude:pos.lat,longitude: pos.lng,radius:pos.radius},
+                url: 'location/search',
+                cache: true
+            }).then(function(response) {
+                return response.data.locations;
+            });
+        },
+        loadPostalLocations: function(postalCode) {
+
+            return ajax.make({
+                data: {address:postalCode},
+                url: 'http://maps.googleapis.com/maps/api/geocode/json?address=90001',
                 cache: true
             }).then(function(response) {
                 return response.data.locations;

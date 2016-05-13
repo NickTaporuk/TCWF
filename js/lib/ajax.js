@@ -174,7 +174,7 @@ define(['config', 'promise'], function(config, Promise) {
 		};
 
 		this.make = function(params) {
-			var url = config.apiBaseUrl + params.url + (/\?/.test(params.url) ? '&' : '?') + 'key=' + config.apikey + (config.sessionId ? '&session_id=' + config.sessionId : '')
+			var url = config.apiBaseUrl + params.url + (/\?/.test(params.url) ? '&' : '?') + 'key=' + config.apikey + (config.sessionId ? '&session_id=' + config.sessionId : '');
 			var a;
 
 			self.beforeSend();
@@ -192,6 +192,7 @@ define(['config', 'promise'], function(config, Promise) {
 				ajaxCounter--;
 				params.complete ? params.complete(response, xhrObject) : self.complete(response, xhrObject);
 			};
+			console.log('params:',params);
 
 			return new Promise(function(resolve, reject) {
 				
@@ -235,7 +236,7 @@ define(['config', 'promise'], function(config, Promise) {
 					} else {
 						reject(response, xhrObject);
 					}
-				})
+				});
 
 				a.always(always);
 
