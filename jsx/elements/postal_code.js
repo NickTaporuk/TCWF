@@ -38,7 +38,6 @@ define([
             var self        = this,
                 regexPost   = this.props.regex,
                 state;
-            // console.log(regexPost.test(e.target.value)) ;
             if(regexPost.test(e.target.value)){
                 self.props.postalcode(e.target.value);
 

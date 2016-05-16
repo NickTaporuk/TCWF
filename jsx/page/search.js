@@ -96,8 +96,6 @@ define([
                     Api.loadLocationsManual(),
                     Api.loadDealerConfig()
                 ]).then(function (response) {
-                    // console.log('response:',response);
-                    // console.log('Api.loadLocations():',Api.loadLocations());
                     self.setState({
                         ready: true,
                         fieldOptions: _.merge(response[0], response[1]),
@@ -138,7 +136,6 @@ define([
 
         _location: function() {
             var self = this;
-            console.log('config _location:',config);
             if(config.locationState === 'auto') {
                 if(self.state.DetectPostCode) {
                     return <PostalCode postalcode={this._handlePostalCode}/>
@@ -155,7 +152,6 @@ define([
                         if(!!this.state.locations[i].country)           str.push(this.state.locations[i].country);
                         str = str.join(',').toString();
                         location_select.push({description:str,value:this.state.locations[i].id.toString()});
-                        console.log('this.state.locations:',this.state.locations);
 
                     }
                     return <SelectField
@@ -168,25 +164,20 @@ define([
             }
         },
         _handlePostalCode: function(postalCode){
-            console.log('postalCode111:',postalCode);
             var self = this;
 
             if(typeof postalCode !== undefined) {
                 Promise.all([
                     Api.loadPostalLocations(postalCode)
                 ]).then(function (response) {
-                    // console.log('_handlePostalCode loadPostalLocations response:',response);
                     if(response[0].results.length > 0) {
                         var pos = response[0].results[0].geometry.location;
                         pos.radius = 200000000;
-                        // console.log('_handlePostalCode loadPostalLocations response pos:',pos);
                         // Api.loadLocation(pos);
                         Promise.all([
                             Api.loadLocations(pos)
                         ]).then(function (response) {
-                            console.log('response:',response);
                             lockr.set('location_id', response[0][0].id);
-                            // console.log('lockr.get(location_id)',lockr.get('location_id'));
                             self.setState({
                                 locations : response ,
                                 locationDetectState : true
@@ -344,7 +335,6 @@ define([
             });
         },
         _locationDetect:function () {
-            console.log('_locationDetect:');
             var self = this,
                 pos = {};
             if(self.state.locationDetectState === false){
@@ -363,9 +353,7 @@ define([
                         Promise.all([
                             Api.loadLocations(pos)
                         ]).then(function (response) {
-                            // console.log('response:',response);
                             lockr.set('location_id', response[0][0].id);
-                            // console.log('lockr.get(location_id)',lockr.get('location_id'));
                             self.setState({
                                 locations : response ,
                                 locationDetectState : true
@@ -426,7 +414,6 @@ define([
                                 }
                                 if(!!params[key].category[keys])
                                 str += encodeURIComponent(key + "[category]["+i+"]") +'='+ params[key].category[keys];
-                                console.log('str:',str);
                                 i++;
                             }
                         } else {
@@ -438,7 +425,6 @@ define([
                         }
                     }
                     var link = window.location.protocol+'//'+redirectUrl +'#!results?'+ str;
-                    // console.log('this.state.locations:',this.state.locations);
                     window.location.href = link.toString();
 
                 }
