@@ -78,7 +78,7 @@ define([
         componentDidMount: function() {
             var self = this;
             var pos = {};
-            if (!this.state.ready) {
+            if (!this.state.ready && config.locationState === 'auto') {
                 Promise.all([
                     Api.loadTireParameters(),
                     Api.loadVehicleOptions(),
@@ -87,6 +87,22 @@ define([
                         ready: true,
                         fieldOptions: _.merge(response[0], response[1]),
                         activeTab: 'vehicle'
+                    });
+                });
+            } else if(!this.state.ready && config.locationState === 'manual') {
+                Promise.all([
+                    Api.loadTireParameters(),
+                    Api.loadVehicleOptions(),
+                    Api.loadLocationsManual(),
+                    Api.loadDealerConfig()
+                ]).then(function (response) {
+                    // console.log('response:',response);
+                    // console.log('Api.loadLocations():',Api.loadLocations());
+                    self.setState({
+                        ready: true,
+                        fieldOptions: _.merge(response[0], response[1]),
+                        locations: response[2],
+                        activeTab: response[3].default_searching ? response[3].default_searching.replace('by_', '') : 'vehicle'
                     });
                 });
             }
@@ -122,9 +138,33 @@ define([
 
         _location: function() {
             var self = this;
+            console.log('config _location:',config);
+            if(config.locationState === 'auto') {
+                if(self.state.DetectPostCode) {
+                    return <PostalCode postalcode={this._handlePostalCode}/>
+                }
+            }
+            if(config.locationState === 'manual') {
+                var location_select = [];
+                if(this.state.locations.length > 0) {
+                    for(var i = 0;this.state.locations.length > i;i++) {
+                        var str = [];
+                        if(!!this.state.locations[i].address_line_1)    str.push(this.state.locations[i].address_line_1);
+                        if(!!this.state.locations[i].address_line_2)    str.push(this.state.locations[i].address_line_2);
+                        if(!!this.state.locations[i].city)              str.push(this.state.locations[i].city);
+                        if(!!this.state.locations[i].country)           str.push(this.state.locations[i].country);
+                        str = str.join(',').toString();
+                        location_select.push({description:str,value:this.state.locations[i].id.toString()});
+                        console.log('this.state.locations:',this.state.locations);
 
-            if(self.state.DetectPostCode) {
-                return <PostalCode postalcode={this._handlePostalCode}/>
+                    }
+                    return <SelectField
+                        options={location_select}
+                        value={location_select[0].id} onChange={this._handleLocationChange}
+                        name="" label="Choose Location"
+                        className={cn(['field'])} required={true} />
+
+                }
             }
         },
         _handlePostalCode: function(postalCode){
@@ -357,7 +397,7 @@ define([
             }
             var params = _.cloneDeep(this.state.fieldValues[this.state.activeTab]);
             var locationId = lockr.get('location_id');
-            this._locationDetect();
+            if(config.locationState === 'auto') this._locationDetect();
 
             if (this._isReadyForSearch()) {
                 if ( locationId ) {

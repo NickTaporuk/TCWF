@@ -37,6 +37,8 @@ requirejs(['lodash','baseParams','env',(params.optim ? (params.scriptPlace + '/j
         sa            : environ.sa,
         scriptPlace   : environ.scriptPlace,
         apiBaseUrl    : environ.apiBaseUrl,
-        redirectUrl   : 'www.tireconnect.ca/new-tireconnect-demo/'
+        redirectUrl   : 'www.tireconnect.ca/new-tireconnect-demo/',
+        locationState : 'auto' // 2 state manual and auto
+        // locationState : 'manual' // 2 state manual and auto
     });
 });

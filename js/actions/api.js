@@ -111,6 +111,15 @@ define([
                 return response.data.locations;
             });
         },
+        loadLocationsManual: function() {
+
+            return ajax.make({
+                url: 'location/list',
+                cache: true
+            }).then(function(response) {
+                return response.data.locations;
+            });
+        },
         loadPostalLocations: function(postalCode) {
 
             return ajax.make({

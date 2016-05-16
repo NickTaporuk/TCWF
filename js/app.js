@@ -37,6 +37,11 @@ window.TCWidgetForm = {
             if (params.redirectUrl) {
               config.setParam('redirectUrl', params.redirectUrl);
             }
+            if (params.locationState) {
+                //default manual
+                if(!params.locationState) params.locationState = 'manual';
+              config.setParam('locationState', params.locationState);
+            }
 
             h.loadCss(config.mainCss);
             h.loadCss('https://fonts.googleapis.com/icon?family=Material+Icons');
