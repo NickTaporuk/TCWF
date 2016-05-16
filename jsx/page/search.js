@@ -62,8 +62,9 @@ define([
                 },
                 SpinnerText: "Loading ...",
                 locationDetectState : false ,     // boolean variable is responsible for visualization determine the user's location
+                DetectPostCode : false ,     // boolean variable is responsible for visualization determine the user's location
                 locations : false,
-                geolocationObj: {}
+                geolocationObj: {},
             }
         },
 
@@ -111,38 +112,20 @@ define([
                                 <ul role="tablist">
                                     {this._tabs()}                                    
                                 </ul>
-                                {this._tabsContent()}  
+                                {this._tabsContent()}
                             </div>
                         </form>
-                    </div>          
-                </div>                
+                    </div>
+                </div>
             );
         },
 
         _location: function() {
-            console.log('_location this.state.locations : ',this.state.locations);
-            if(this.state.locations.length > 0) {
-                var self = this,
-                    location_select = [];
-                // console.log('this.state.locations:',this.state.locations);
-                for(var i = 0;this.state.locations.length > i;i++) {
-                    var str = [];
-                    if(!!this.state.locations[i].address_line_1)    str.push(this.state.locations[i].address_line_1);
-                    if(!!this.state.locations[i].address_line_2)    str.push(this.state.locations[i].address_line_2);
-                    if(!!this.state.locations[i].city)              str.push(this.state.locations[i].city);
-                    if(!!this.state.locations[i].country)           str.push(this.state.locations[i].country);
-                    str = str.join(',').toString();
-                    location_select.push({description:str,value:this.state.locations[i].id.toString()});
-                }
-                //TODO:commit select location state
-                // location_select.push({description:1,value:1});
+            var self = this;
 
-                return <SelectField
-                    options={location_select}
-                    value={location_select[0].id} onChange={this._handleLocationChange}
-                    name="" label="Choose Location"
-                    className={cn(['field'])} required={true} />
-            } else return <PostalCode postalcode={this._handlePostalCode}/> ;
+            if(self.state.DetectPostCode) {
+                return <PostalCode postalcode={this._handlePostalCode}/>
+            }
         },
         _handlePostalCode: function(postalCode){
             console.log('postalCode111:',postalCode);
@@ -152,14 +135,26 @@ define([
                 Promise.all([
                     Api.loadPostalLocations(postalCode)
                 ]).then(function (response) {
-                    console.log('_handlePostalCode loadPostalLocations response:',response[0].results[0].geometry.location);
-                    var pos = response[0].results[0].geometry.location;
+                    // console.log('_handlePostalCode loadPostalLocations response:',response);
+                    if(response[0].results.length > 0) {
+                        var pos = response[0].results[0].geometry.location;
                         pos.radius = 200000000;
-                    // console.log('_handlePostalCode loadPostalLocations response pos:',pos);
-                    // Api.loadLocation(pos);
-                    self.setState({
-                        geolocationObj: pos
-                    });
+                        // console.log('_handlePostalCode loadPostalLocations response pos:',pos);
+                        // Api.loadLocation(pos);
+                        Promise.all([
+                            Api.loadLocations(pos)
+                        ]).then(function (response) {
+                            console.log('response:',response);
+                            lockr.set('location_id', response[0][0].id);
+                            // console.log('lockr.get(location_id)',lockr.get('location_id'));
+                            self.setState({
+                                locations : response ,
+                                locationDetectState : true
+                            });
+                        })
+                    } else {
+                        console.log('empty result post code _handlePostalCode :');
+                    }
                 });
             }
         },
@@ -312,26 +307,46 @@ define([
             console.log('_locationDetect:');
             var self = this,
                 pos = {};
+            if(self.state.locationDetectState === false){
+                if(window.location.protocol === 'http:' && window.navigator.userAgent.match(/Chrome\/5\d+/i) !== null) {
 
-            if(window.location.protocol === 'http:' && window.navigator.userAgent.match(/Chrome\/5\d+/i) !== null) {
-                this.setState({
-                    locationDetectState : true
-                });
-            } else if (!!window.navigator.geolocation ) {
-                window.navigator.geolocation.getCurrentPosition(function (position) {
-
-                    pos.lat = position.coords.latitude;
-                    pos.lng = position.coords.longitude;
-                    pos.radius = 2000000000;
-                    Promise.all([
-                        Api.loadLocations(pos)
-                    ]).then(function (response) {
-                        console.log('response:',response);
-                        self.setState({
-                            locations: response
-                        });
+                    self.setState({
+                        locationDetectState : true,
+                        DetectPostCode : true
                     });
-                });
+                } else if (!!window.navigator.geolocation ) {
+                    window.navigator.geolocation.getCurrentPosition(function (position) {
+
+                        pos.lat = position.coords.latitude;
+                        pos.lng = position.coords.longitude;
+                        pos.radius = 2000000000;
+                        Promise.all([
+                            Api.loadLocations(pos)
+                        ]).then(function (response) {
+                            // console.log('response:',response);
+                            lockr.set('location_id', response[0][0].id);
+                            // console.log('lockr.get(location_id)',lockr.get('location_id'));
+                            self.setState({
+                                locations : response ,
+                                locationDetectState : true
+                            });
+                        });
+                    },function(error) {
+                            self.setState({
+                                locationDetectState : true,
+                                DetectPostCode      : true
+                            });
+                        console.log('error _locationDetect:',error);
+                    }
+                        ,{maximumAge:60000, timeout:5000, enableHighAccuracy:true}
+                    );
+
+                } else {
+                    self.setState({
+                        locationDetectState : true,
+                        DetectPostCode : true
+                    });
+                }
             }
 
         },
@@ -383,7 +398,7 @@ define([
                         }
                     }
                     var link = window.location.protocol+'//'+redirectUrl +'#!results?'+ str;
-                    console.log('this.state.locations:',this.state.locations);
+                    // console.log('this.state.locations:',this.state.locations);
                     window.location.href = link.toString();
 
                 }

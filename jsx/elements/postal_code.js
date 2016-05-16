@@ -25,8 +25,8 @@ define([
         },
         render: function() {
             var postalCodeDiv = <div >
-                                    <input type="text" onChange={this._getInputPostal} style={{ border: this.state.inputBackground}}/>
-                                    <button onClick={this._getPostalCode}>getPostalCode</button>
+                                    <label htmlFor="post-code">Enter post code:</label>
+                                    <input id="post-code" type="text"  onChange={this._getInputPostal} style={{ border: this.state.inputBackground}} />
                                 </div>;
             return postalCodeDiv;
         },
@@ -38,8 +38,10 @@ define([
             var self        = this,
                 regexPost   = this.props.regex,
                 state;
-            console.log(regexPost.test(e.target.value))    ;
+            // console.log(regexPost.test(e.target.value)) ;
             if(regexPost.test(e.target.value)){
+                self.props.postalcode(e.target.value);
+
                 state = self.state.background.success;
                 self.setState({
                     code : e.target.value,
