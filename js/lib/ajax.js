@@ -200,7 +200,6 @@ define(['config', 'promise'], function(config, Promise) {
 				ajaxCounter--;
 				params.complete ? params.complete(response, xhrObject) : self.complete(response, xhrObject);
 			};
-			console.log('params:',params);
 
 			return new Promise(function(resolve, reject) {
 				
