@@ -168,7 +168,9 @@ define([
                     } else {
                         console.log('empty result post code _handlePostalCode :');
                         self.setState({
-                            locationDetectState : true
+                            locationDetectState : true,
+                            DetectPostCode : true
+
                         });
                     }
                 });
