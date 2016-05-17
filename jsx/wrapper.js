@@ -3,15 +3,13 @@ define([
     'reactDOM',
     'classnames', 
     'config',
-    'load!components/page/search',
-    'load!components/preloader'
+    'load!components/page/search'
 ], function(
     React,
     ReactDOM,
     cn, 
     config,
-    Search,
-    Preloader
+    Search
 ) {
 
     return {
@@ -30,7 +28,6 @@ define([
             return (
                 <div id={cn('widget')}>
                     <div className={cn('wrapper')}>
-                        <Preloader />
                         <Search />
                     </div>
                 </div>

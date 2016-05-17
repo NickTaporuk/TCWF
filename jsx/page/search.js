@@ -95,7 +95,8 @@ define([
 
         render: function() {
             if (!this.state.ready) {
-                return null;
+                var img = config.imagesFolder + 'loader.gif';
+                return React.createElement('div', { style: { minHeight: '66px', display: 'block', background: 'url("' + img + '") 50% 50% no-repeat rgb(255, 255, 255)' } });
             }
 
             return (
