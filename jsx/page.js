@@ -68,7 +68,7 @@ define([
             var widget = document.getElementById(cn('widget'));
             h.scrollToTop(widget);
         }
-    }
+    };
 
     return Page;
 });

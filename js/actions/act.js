@@ -1,8 +1,6 @@
 define([
     'dispatcher',
     'promise',
-    'load!stores/store',
-    'load!stores/popupStore',
     'actions/api',
     'lib/helper',
     'lib/history',
@@ -11,8 +9,6 @@ define([
 ], function(
     dispatcher,
     Promise,
-    store,
-    popupStore,
     Api,
     h,
     history,  // history must be used to fill appStore
