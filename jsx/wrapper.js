@@ -3,14 +3,14 @@ define([
     'reactDOM',
     'classnames', 
     'config',
-    'load!components/page',
+    'load!components/page/search',
     'load!components/preloader'
 ], function(
     React,
     ReactDOM,
     cn, 
     config,
-    Page,
+    Search,
     Preloader
 ) {
 
@@ -31,7 +31,7 @@ define([
                 <div id={cn('widget')}>
                     <div className={cn('wrapper')}>
                         <Preloader />
-                        <Page />
+                        <Search />
                     </div>
                 </div>
             );
