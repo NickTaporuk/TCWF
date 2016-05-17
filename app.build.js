@@ -1,8 +1,8 @@
 ({
 	baseUrl: "./js",
 	// mainConfigFile: "build_config.js",
-	// name: "bower_components/almond/almond",
-	name: "bower_components/requirejs/require",
+	name: "bower_components/almond/almond",
+	// name: "bower_components/requirejs/require",
 	include: ['app'],
 	findNestedDependencies: true,
 	// optimize: "none",

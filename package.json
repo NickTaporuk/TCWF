@@ -5,16 +5,12 @@
   "main": "js/widget.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "build": "babel --presets react jsx --out-dir js/components",
     "build-css": "node-sass --output-style compressed --source-map true  scss/ --output css/",
-
     "watch-jsx": "babel --presets react jsx --watch --out-dir js/components",
     "watch-scss": "node-sass --watch --output-style compressed --source-map true  scss/ --output css/",
-
     "compile-js": "r.js -o app.build.js",
     "compile-js-win": "r.js.cmd -o app.build.js",
-
     "install": "bower install && npm run build && npm run build-css"
   },
   "repository": {

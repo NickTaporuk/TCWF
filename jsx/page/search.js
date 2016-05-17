@@ -148,8 +148,9 @@ define([
         },
         _handlePostalCode: function(postalCode){
             var self = this;
-
-            if(typeof postalCode !== undefined) {
+            var r = /^\d{5,9}$/;
+            // console.log('regex:', r.test(postalCode));
+            if(typeof postalCode !== undefined && r.test(postalCode)) {
                 Promise.all([
                     Api.loadPostalLocations(postalCode)
                 ]).then(function (response) {
@@ -167,6 +168,8 @@ define([
                         })
                     } else {
                         console.log('empty result post code _handlePostalCode :');
+                        lockr.set('location_id', false);
+
                         self.setState({
                             locationDetectState : true,
                             DetectPostCode : true
@@ -174,6 +177,8 @@ define([
                         });
                     }
                 });
+            } else {
+                lockr.set('location_id', false);
             }
         },
         _tabs: function() {
