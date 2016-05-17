@@ -159,7 +159,6 @@ define([
                         value={location_select[0].id} onChange={this._handleLocationChange}
                         name="" label="Choose Location"
                         className={cn(['field'])} required={true} />
-
                 }
             }
         },
@@ -379,7 +378,6 @@ define([
 
         },
         _handleSubmit: function(event) {
-            var self        = this;
             if (event) {
                 event.preventDefault();
             }

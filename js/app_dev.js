@@ -16,9 +16,9 @@ for (var i = 0; i < urlParamsLength; i++) {
 requirejs.config({
     baseUrl: './js/',
     paths: {
-        lodash        : 'bower_components/lodash/lodash',
-        baseParams  : 'env/localParamsBase',
-        env         : 'env/localParams',
+        lodash          : 'bower_components/lodash/lodash',
+        baseParams      : 'env/localParamsBase',
+        env             : 'env/localParams',
     }
 });
 

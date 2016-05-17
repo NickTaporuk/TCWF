@@ -69,7 +69,6 @@ window.TCWidgetForm = {
                 'reactDOM',
                 'load!components/wrapper',
                 'load!actions/act',
-                // 'load!components/overlay',
                 'classnames',
                 'actions/api'],
             function(
@@ -77,7 +76,6 @@ window.TCWidgetForm = {
                 ReactDOM,
                 Wrapper,
                 Act,
-                // Overlay,
                 cn,
                 Api
             ) {

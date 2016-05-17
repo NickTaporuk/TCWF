@@ -3,8 +3,6 @@ define([
     'reactDOM',
     'classnames', 
     'config',
-    'load!components/top',
-    'load!components/header', 
     'load!components/page',
     'load!components/preloader'
 ], function(
@@ -12,8 +10,6 @@ define([
     ReactDOM,
     cn, 
     config,
-    Top,
-    Header, 
     Page,
     Preloader
 ) {
@@ -42,7 +38,7 @@ define([
         },
 
         _checkContainerWidth: function() {
-            var el = ReactDOM.findDOMNode(this)
+            var el = ReactDOM.findDOMNode(this);
             var tireconnect = el.parentElement,
                 tireconnectWidth = tireconnect.offsetWidth;
 

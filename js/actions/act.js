@@ -80,20 +80,6 @@ define([
 
     function execute(page, params, afterNav) {
         actions.route(page, params);
-
-        // switch (page) {
-        //     case '':
-        //         actions.searchPage.update(params, afterNav);
-        //         break;
-        //     case 'get_a_quote':
-        //         actions.getAQuotePage.update(params, afterNav);
-        //         break;
-        //     case 'email_only':
-        //         actions.emailOnlyPage.update(params, afterNav);
-        //         break;
-        //     default:
-        //         actions[page + 'Page'].update(params, afterNav);
-        // }
     }
 
     history.bind('popstate', function (state) {

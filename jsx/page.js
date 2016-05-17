@@ -2,13 +2,6 @@ define([
     'reactDOM',
     'lib/helper',
     'load!components/page/search',
-    'load!components/page/results',
-    'load!components/page/summary',
-    'load!components/page/quoteForm',
-    'load!components/page/order',
-    'load!components/page/confirmation',
-    'load!components/page/quote',
-    'load!components/page/emailForm',
     'react',
     'load!stores/store',
     'classnames',
@@ -18,13 +11,6 @@ define([
     ReactDOM,
     h,
     Search,
-    Results,
-    Summary,
-    QuoteForm,
-    Order,
-    Confirmation,
-    Quote,
-    EmailForm,
     React,
     store,
     cn,
@@ -73,27 +59,6 @@ define([
             switch (this.state.name) {
                 case 'search':
                     content = <Search {...props} />;
-                    break;
-                case 'results':
-                    content = <Results {...props} />;
-                    break;
-                case 'summary':
-                    content = <Summary {...props} />;
-                    break;
-                case 'quote_form':
-                    content = <QuoteForm {...props} />;
-                    break;
-                case 'email_form':
-                    content = <EmailForm {...props} />;
-                    break;
-                case 'get_a_quote':
-                    content = <Quote {...props} />;
-                    break;
-                case 'order':
-                    content = <Order {...props} />;
-                    break;
-                case 'confirmation':
-                    content = <Confirmation {...props} />;
                     break;
 
                 case '':
