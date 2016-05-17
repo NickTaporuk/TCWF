@@ -102,10 +102,6 @@ define([
             }
         },
 
-        componentWillUnmount: function () {
-            appStore.savePageState(this);
-        },
-
         render: function() {
             if (!this.state.ready) {
                 return null;
