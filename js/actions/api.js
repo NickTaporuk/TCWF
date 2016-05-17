@@ -2,18 +2,12 @@ define([
     'dispatcher',
     'promise',
     'ajax',
-    'isMobile',
-    'validate',
-    'moment',
     'load!actions/constants',
     'config'
 ], function(
     dispatcher,
     Promise,
     ajax,
-    isMobile,
-    validate,
-    moment,
     constants,
     config
 ) {
@@ -47,55 +41,6 @@ define([
         });
 
         return newOptions;
-    }
-
-    validate.extend(validate.validators.datetime, {
-        // The value is guaranteed not to be null or undefined but otherwise it
-        // could be anything.
-        parse: function(value, options) {
-            return +moment(value);
-        },
-        // Input is a unix timestamp
-        format: function(value, options) {
-            var format = options.dateOnly ? 'YYYY-MM-DD' : this.timeFormat;
-            return moment(value).format(format);
-        }
-    });
-
-    function validateParamsForQuote(values, requiredParams) {
-        var constraints = {
-            name: {
-                length: {maximum: 255}
-            },
-            email: {
-                email: true,
-                length: {maximum: 255}
-            },
-            phone: {
-                format: {
-                    pattern: "^\\(?[0-9]{3}\\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}$",
-                    message: "is not valid phone number"
-                }
-            },
-            preferred_time: {
-                datetime: {
-                    earliest: moment()
-                },
-            },
-            notes: {
-                length: {maximum: 500}
-            }
-        };
-
-        if (requiredParams) {
-            requiredParams.map(function(field) {
-                if (!constraints[field]) {
-                    constraints[field] = {};
-                }
-                constraints[field].presence = true;
-            });
-        }
-        return validate(values, constraints);
     }
 
 
@@ -144,20 +89,11 @@ define([
 
         loadLocationConfig: function(locationId) {
             // we need location config only for mobile version (to gate call number) for now
-            if (isMobile.any) {
-                return ajax.make({
-                    url: 'location/' + locationId + '/config',
-                    cache: true
-                }).then(function(response) {
-                    return response.data;
-                });
-            } else {
                 return Promise.resolve({
                     call_number: null
                 }).then(function(response) {
                     return response;
                 });
-            }
         },
 
         loadTireParameters: function() {

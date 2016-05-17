@@ -2,7 +2,6 @@ define([
     'react',
     'classnames',
     'config',
-    'load!actions/act',
     'load!components/elements/select',
     'load!components/page/search/locations',
     'actions/api',
@@ -16,7 +15,6 @@ define([
     React,
     cn,
     config,
-    A,
     SelectField,
     Locations,
     Api,
@@ -414,8 +412,8 @@ define([
                     str += key + "=" + encodeURIComponent(params[key]);
                 }
             }
-            lockr.set('location_id', false);
 
+            lockr.set('location_id', false);
             var link = window.location.protocol+'//'+redirectUrl +'#!results?'+ str;
             window.location.href = link.toString();
         },

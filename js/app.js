@@ -49,10 +49,7 @@ window.TCWidgetForm = {
             requirejs.config({
                 baseUrl: './js/', 
                 paths: {
-                    isMobile: 'bower_components/isMobile/isMobile',
                     lodash: 'bower_components/lodash/lodash',
-                    validate: 'bower_components/validate/validate',
-                    moment: 'bower_components/moment/moment',
                     dispatcher: 'lib/dispatcher',
                     ajax: 'lib/ajax',
                     react: 'bower_components/react/react',
@@ -60,7 +57,6 @@ window.TCWidgetForm = {
                     microEvent: 'bower_components/microevent/microevent',
                     promise: 'bower_components/es6-promise-polyfill/promise',
                     load: 'loader',
-                    stripe: 'https://js.stripe.com/v2/stripe'
                 }
             });
 
@@ -68,14 +64,12 @@ window.TCWidgetForm = {
                 'react',
                 'reactDOM',
                 'load!components/wrapper',
-                'load!actions/act',
                 'classnames',
                 'actions/api'],
             function(
                 React,
                 ReactDOM,
                 Wrapper,
-                Act,
                 cn,
                 Api
             ) {
@@ -96,10 +90,7 @@ window.TCWidgetForm = {
                 if (!config.sessionId) {
                     Api.setSession().then(function(sessionId) {
                         config.setParam('sessionId', sessionId);
-                        Act.init();
                     });
-                } else {
-                    Act.init();
                 }
             });
         });
