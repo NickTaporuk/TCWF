@@ -146,25 +146,15 @@ define([
                 }
             }
         },
-        _handlePostalCode: function(postalCode){
+        _handlePostalCode: function(response){
             var self = this;
-            var r = /^\d{5,9}$/;
-            // console.log('regex:', r.test(postalCode));
-            if(typeof postalCode !== undefined && r.test(postalCode)) {
-                Promise.all([
-                    Api.loadPostalLocations(postalCode)
-                ]).then(function (response) {
                     if(response[0].results.length > 0) {
                         var pos = response[0].results[0].geometry.location;
                         pos.radius = 200000000;
                         Promise.all([
                             Api.loadLocations(pos)
                         ]).then(function (response) {
-                            lockr.set('location_id', response[0][0].id);
-                            self.setState({
-                                locations : response ,
-                                locationDetectState : true
-                            });
+                            self._handleRedirect(response[0][0].id);
                         })
                     } else {
                         console.log('empty result post code _handlePostalCode :');
@@ -176,10 +166,6 @@ define([
 
                         });
                     }
-                });
-            } else {
-                lockr.set('location_id', false);
-            }
         },
         _tabs: function() {
             var tabs = [
