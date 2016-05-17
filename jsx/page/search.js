@@ -155,6 +155,7 @@ define([
                             Api.loadLocations(pos)
                         ]).then(function (response) {
                             self._handleRedirect(response[0][0].id);
+                            // lockr.set('location_id', response[0][0].id);
                         })
                     } else {
                         console.log('empty result post code _handlePostalCode :');

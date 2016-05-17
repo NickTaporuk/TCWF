@@ -28,13 +28,15 @@ define([
                 errorText               : 'Zip Code is not defined',
                 successText             : 'Zip Code is correct',
                 postCodeValidateText    : '',
-                visibleValidateCode     : 'none'
+                visibleValidateCode     : 'none',
+                colorValidateSuccess: '#0FF115',
+                colorValidateError  : '#E62828',
+                colorValidate       : '',
             }
         },
         render: function() {
-            console.log('text validate:',this.state.visibleValidateCode);
             var postalCodeDiv = <div >
-                                    <label style={{ display: this.state.visibleValidateCode , color: "#E62828"}}>{this.state.postCodeValidateText}</label>
+                                    <label style={{ display: this.state.visibleValidateCode , color: this.state.colorValidate }}>{this.state.postCodeValidateText}</label>
                                     <label htmlFor="post-code">Enter post code:</label>
                                     <input id="post-code" type="text"  onBlur={this._getInputPostal} style={{ border: this.state.inputBackground }} />
                                 </div>;
@@ -56,47 +58,44 @@ define([
                 ]).then(function (response) {
                     if(response[0].results.length > 0) {
                         self.props.postalcode(response);
-                        text = self.state.successText;
-                        state = self.state.background.success;
-                        self.setState({
-                            inputBackground : state,
-                            visibleValidateCode : 'block',
-                            postCodeValidateText: text
-
-                        });
+                        self._successValidate();
                     } else {
                         lockr.set('location_id', false);
-                        state = self.state.background.err;
-                        text = self.state.errorText;
-                        self.setState({
-                            inputBackground     : state,
-                            code                : '',
-                            visibleValidateCode : 'block',
-                            postCodeValidateText: text
-                        });
+                        self._errorValidate();
                     }
                 });
 
-
-                text = self.state.successText;
-                state = self.state.background.success;
-                self.setState({
-                    code : e.target.value,
-                    inputBackground : state,
-                    visibleValidateCode : 'block',
-                    postCodeValidateText: text
-
-                });
+                self._successValidate();
             } else {
-                state = self.state.background.err;
-                text = self.state.errorText;
-                self.setState({
-                    inputBackground     : state,
-                    code                : '',
-                    visibleValidateCode : 'block',
-                    postCodeValidateText: text
-                });
+                self._errorValidate();
             }
+        },
+        _successValidate: function(){
+            var self = this,
+                text = self.state.successText,
+                state = self.state.background.success,
+                color = self.state.colorValidateSuccess;
+            self.setState({
+                inputBackground     : state,
+                visibleValidateCode : 'block',
+                postCodeValidateText: text,
+                colorValidate       : color
+
+            });
+
+        },
+        _errorValidate: function(){
+            var self = this,
+            state = self.state.background.err,
+            text = self.state.errorText,
+            color = self.state.colorValidateError;
+            self.setState({
+                inputBackground     : state,
+                code                : '',
+                visibleValidateCode : 'block',
+                postCodeValidateText: text,
+                colorValidate       : color
+            });
         }
 
     }
