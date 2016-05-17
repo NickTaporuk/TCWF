@@ -3,7 +3,6 @@ define([
     'classnames',
     'config',
     'load!components/elements/select',
-    'load!components/page/search/locations',
     'actions/api',
     'load!stores/appStore',
     'promise',
@@ -16,7 +15,6 @@ define([
     cn,
     config,
     SelectField,
-    Locations,
     Api,
     appStore,
     Promise,
@@ -355,6 +353,7 @@ define([
                         ]).then(function (response) {
                             lockr.set('location_id', response[0][0].id);
                             self._handleRedirect(response[0][0].id);
+                            lockr.set('location_id', false);
 
                         });
                     },function(error) {
