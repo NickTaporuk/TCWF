@@ -62,13 +62,6 @@ define([
             }
         },
 
-        componentWillMount: function () {
-            var lastState = appStore.getPageState(this);
-            if (lastState) {
-                this.setState(lastState);
-            }
-        },
-
         componentDidMount: function() {
             var self = this;
             var pos = {};
