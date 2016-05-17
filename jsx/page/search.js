@@ -172,7 +172,6 @@ define([
                     if(response[0].results.length > 0) {
                         var pos = response[0].results[0].geometry.location;
                         pos.radius = 200000000;
-                        // Api.loadLocation(pos);
                         Promise.all([
                             Api.loadLocations(pos)
                         ]).then(function (response) {
@@ -184,6 +183,10 @@ define([
                         })
                     } else {
                         console.log('empty result post code _handlePostalCode :');
+                        self.setState({
+                            locations : response ,
+                            locationDetectState : true
+                        });
                     }
                 });
             }
@@ -353,12 +356,11 @@ define([
                             Api.loadLocations(pos)
                         ]).then(function (response) {
                             lockr.set('location_id', response[0][0].id);
-                            self.setState({
-                                locations : response ,
-                                locationDetectState : true
-                            });
+                            self._handleRedirect(response[0][0].id);
+
                         });
                     },function(error) {
+                            lockr.set('location_id', false);
                             self.setState({
                                 locationDetectState : true,
                                 DetectPostCode      : true
@@ -377,54 +379,57 @@ define([
             }
 
         },
+        _handleRedirect: function(location_id){
+            var params = _.cloneDeep(this.state.fieldValues[this.state.activeTab]);
+            var redirectUrl = config.redirectUrl;
+            var str = "";
+                params.location_id = location_id;
+            if (params.base_category) {
+                this.state.fieldOptions.base_category.map(function (baseCat) {
+                    if (baseCat.value == params.base_category) {
+                        params.filters = {};
+                        params.filters.category = baseCat.categories;
+                    }
+                });
+                delete params.base_category;
+            }
+
+            for (var key in params) {
+
+                if( !!params[key].category && typeof params[key].category === 'object') {
+                    var i=0;
+                    for(keys in params[key].category) {
+                        if (str != "") {
+                            str += "&";
+                        }
+                        if(!!params[key].category[keys])
+                            str += encodeURIComponent(key + "[category]["+i+"]") +'='+ params[key].category[keys];
+                        i++;
+                    }
+                } else {
+                    if(!!!params[key]) continue;
+                    if (str != "") {
+                        str += "&";
+                    }
+                    str += key + "=" + encodeURIComponent(params[key]);
+                }
+            }
+            lockr.set('location_id', false);
+
+            var link = window.location.protocol+'//'+redirectUrl +'#!results?'+ str;
+            window.location.href = link.toString();
+        },
+
         _handleSubmit: function(event) {
             if (event) {
                 event.preventDefault();
             }
-            var params = _.cloneDeep(this.state.fieldValues[this.state.activeTab]);
             var locationId = lockr.get('location_id');
             if(config.locationState === 'auto') this._locationDetect();
 
             if (this._isReadyForSearch()) {
                 if ( locationId ) {
-
-                    var redirectUrl = config.redirectUrl;
-                    var str = "";
-                    if ( locationId )
-                        params.location_id = locationId;
-                    if (params.base_category) {
-                        this.state.fieldOptions.base_category.map(function (baseCat) {
-                            if (baseCat.value == params.base_category) {
-                                params.filters = {};
-                                params.filters.category = baseCat.categories;
-                            }
-                        });
-                        delete params.base_category;
-                    }
-
-                    for (var key in params) {
-
-                        if( !!params[key].category && typeof params[key].category === 'object') {
-                            var i=0;
-                            for(keys in params[key].category) {
-                                if (str != "") {
-                                    str += "&";
-                                }
-                                if(!!params[key].category[keys])
-                                str += encodeURIComponent(key + "[category]["+i+"]") +'='+ params[key].category[keys];
-                                i++;
-                            }
-                        } else {
-                            if(!!!params[key]) continue;
-                            if (str != "") {
-                                str += "&";
-                            }
-                            str += key + "=" + encodeURIComponent(params[key]);
-                        }
-                    }
-                    var link = window.location.protocol+'//'+redirectUrl +'#!results?'+ str;
-                    window.location.href = link.toString();
-
+                    this._handleRedirect(locationId);
                 }
             }
         },

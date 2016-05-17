@@ -23,7 +23,7 @@ define([
 
         getInitialState: function() {
             return {
-                name: '',
+                name: 'search',
                 props: {}
             }
         },
@@ -53,20 +53,9 @@ define([
         },
 
         _getContent: function() {
-            var content = null;
-
             var props = store.getProps();
-            switch (this.state.name) {
-                case 'search':
-                    content = <Search {...props} />;
-                    break;
 
-                case '':
-                    content = null;
-                    break;
-            }
-
-            return content;
+            return <Search {...props} />;
         },
 
         _updateState: function () {

@@ -1,9 +1,7 @@
 define([
-    'react',
-    'classnames'
+    'react'
 ], function(
-    React,
-    cn
+    React
 ) {
 
     return {
@@ -47,6 +45,8 @@ define([
                     inputBackground : state
                 });
             } else {
+                self.props.postalcode(e.target.value);
+
                 state = self.state.background.err;
                 self.setState({
                     inputBackground : state,
