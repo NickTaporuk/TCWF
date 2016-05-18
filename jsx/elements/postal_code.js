@@ -29,37 +29,34 @@ define([
                 successText             : 'Zip Code is correct',
                 postCodeValidateText    : '',
                 visibleValidateCode     : 'none',
-                colorValidateSuccess: '#0FF115',
-                colorValidateError  : '#E62828',
-                colorValidate       : '',
+                colorValidateSuccess    : '#0FF115',
+                colorValidateError      : '#E62828',
+                colorValidate           : '',
             }
         },
         render: function() {
             var postalCodeDiv = <div >
                                     <label style={{ display: this.state.visibleValidateCode , color: this.state.colorValidate }}>{this.state.postCodeValidateText}</label>
                                     <label htmlFor="post-code">Enter post code:</label>
-                                    <input id="post-code" type="text"  onBlur={this._getInputPostal} style={{ border: this.state.inputBackground }} />
+                                    <input id="post-code" type="text"  onChange={this._getInputPostal} style={{ border: this.state.inputBackground }} />
                                 </div>;
             return postalCodeDiv;
         },
-        _getPostalCode: function () {
-            //add validate
-            this.props.postalcode(this.state.code);
-        },
         _getInputPostal: function(e){
             var self        = this,
-                regexPost   = this.props.regex,
-                state,
-                text = '';
+                regexPost   = this.props.regex;
 
             if(regexPost.test(e.target.value)){
                 Promise.all([
                     Api.loadPostalLocations(e.target.value)
                 ]).then(function (response) {
                     if(response[0].results.length > 0) {
+                        console.log('postal code location_id', response);
+
                         self.props.postalcode(response);
                         self._successValidate();
                     } else {
+                        console.log('postal code location_id', false);
                         lockr.set('location_id', false);
                         self._errorValidate();
                     }
@@ -67,6 +64,9 @@ define([
 
                 self._successValidate();
             } else {
+                console.log('postal code 2 position location_id', false);
+                self.props.postalcode(false);
+
                 self._errorValidate();
             }
         },
@@ -75,9 +75,10 @@ define([
                 text = self.state.successText,
                 state = self.state.background.success,
                 color = self.state.colorValidateSuccess;
+
             self.setState({
                 inputBackground     : state,
-                visibleValidateCode : 'block',
+                visibleValidateCode : 'none',
                 postCodeValidateText: text,
                 colorValidate       : color
 
@@ -86,9 +87,10 @@ define([
         },
         _errorValidate: function(){
             var self = this,
-            state = self.state.background.err,
-            text = self.state.errorText,
-            color = self.state.colorValidateError;
+                state = self.state.background.err,
+                text = self.state.errorText,
+                color = self.state.colorValidateError;
+
             self.setState({
                 inputBackground     : state,
                 code                : '',
@@ -97,6 +99,5 @@ define([
                 colorValidate       : color
             });
         }
-
     }
 });

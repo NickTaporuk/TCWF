@@ -7,7 +7,7 @@ define([
     'promise',
     'lodash',
     'lockr',
-    'load!components/elements/postal_code',
+    'load!components/elements/postal_code'
 
 ], function(
     React,
@@ -57,18 +57,17 @@ define([
                 SpinnerText: "Loading ...",
                 locationDetectState : false ,     // boolean variable is responsible for visualization determine the user's location
                 DetectPostCode : false ,     // boolean variable is responsible for visualization determine the user's location
-                locations : false,
-                geolocationObj: {},
+                locations : false
             }
         },
 
         componentDidMount: function() {
             var self = this;
-            var pos = {};
+
             if (!this.state.ready && config.locationState === 'auto') {
                 Promise.all([
                     Api.loadTireParameters(),
-                    Api.loadVehicleOptions(),
+                    Api.loadVehicleOptions()
                 ]).then(function (response) {
                     self.setState({
                         ready: true,
@@ -146,27 +145,36 @@ define([
                 }
             }
         },
-        _handlePostalCode: function(response){
+        _handlePostalCode: function(response) {
             var self = this;
-                    if(response[0].results.length > 0) {
-                        var pos = response[0].results[0].geometry.location;
-                        pos.radius = 200000000;
-                        Promise.all([
-                            Api.loadLocations(pos)
-                        ]).then(function (response) {
-                            self._handleRedirect(response[0][0].id);
-                            // lockr.set('location_id', response[0][0].id);
-                        })
-                    } else {
-                        console.log('empty result post code _handlePostalCode :');
-                        lockr.set('location_id', false);
+            if(response === false) {
+                self.setState({
+                    locationDetectState : true,
+                    DetectPostCode      : true,
+                    locations           : false
+                });
+            } else if(response[0].results.length > 0) {
+                var pos = response[0].results[0].geometry.location;
+                pos.radius = 200000000;
+                Promise.all([
+                    Api.loadLocations(pos)
+                ]).then(function (response) {
+                    console.log('Api.loadLocations response[0][0].id',response[0][0].id);
+                    // lockr.set('location_id', response[0][0].id);
+                    self.setState({
+                        locations: response[0][0].id
+                    });
+                    // self._handleRedirect(response[0][0].id);
+                })
+            } else {
+                console.log('empty result post code _handlePostalCode :');
 
-                        self.setState({
-                            locationDetectState : true,
-                            DetectPostCode : true
-
-                        });
-                    }
+                self.setState({
+                    locationDetectState : true,
+                    DetectPostCode      : true,
+                    locations           : false
+                });
+            }
         },
         _tabs: function() {
             var tabs = [
@@ -332,9 +340,9 @@ define([
                         Promise.all([
                             Api.loadLocations(pos)
                         ]).then(function (response) {
-                            lockr.set('location_id', response[0][0].id);
+                            // lockr.set('location_id', response[0][0].id);
                             self._handleRedirect(response[0][0].id);
-                            lockr.set('location_id', false);
+                            // lockr.set('location_id', false);
 
                         });
                     },function(error) {
@@ -357,7 +365,7 @@ define([
             }
 
         },
-        _handleRedirect: function(location_id){
+        _handleRedirect: function(location_id) {
             var params = _.cloneDeep(this.state.fieldValues[this.state.activeTab]);
             var redirectUrl = config.redirectUrl;
             var str = "";
@@ -402,10 +410,12 @@ define([
             if (event) {
                 event.preventDefault();
             }
-            var locationId = lockr.get('location_id');
-            if(config.locationState === 'auto') this._locationDetect();
-
+            var locationId;
+            if(config.locationState === 'manual') locationId = lockr.get('location_id');
+            if(config.locationState === 'auto') locationId = this.state.locations;
             if (this._isReadyForSearch()) {
+                console.log('locationId:',locationId);
+                if(config.locationState === 'auto') { this._locationDetect() };
                 if ( locationId ) {
                     this._handleRedirect(locationId);
                 }
@@ -479,8 +489,8 @@ define([
             for (key in fieldNames) {
                 for(keys in fieldNames[key]) {
                     if(typeof fieldNames[key][keys] === 'object' && fieldNames[key][keys].state === true) {
-                        fieldNames[key][keys].state = false;
-                        fieldNames[key][keys].text = fieldNames[key][keys].name;
+                        fieldNames[key][keys].state     = false;
+                        fieldNames[key][keys].text      = fieldNames[key][keys].name;
                     }
                 }
             }
@@ -494,7 +504,6 @@ define([
 
         _handleLocationSelect: function (locationId) {
             lockr.set('location_id', locationId);
-            // A.popup.close();
             this._handleSubmit();
         },
 
