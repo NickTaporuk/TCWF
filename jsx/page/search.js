@@ -159,15 +159,11 @@ define([
                 Promise.all([
                     Api.loadLocations(pos)
                 ]).then(function (response) {
-                    console.log('Api.loadLocations response[0][0].id',response[0][0].id);
-                    // lockr.set('location_id', response[0][0].id);
                     self.setState({
                         locations: response[0][0].id
                     });
-                    // self._handleRedirect(response[0][0].id);
                 })
             } else {
-                console.log('empty result post code _handlePostalCode :');
 
                 self.setState({
                     locationDetectState : true,
@@ -340,10 +336,7 @@ define([
                         Promise.all([
                             Api.loadLocations(pos)
                         ]).then(function (response) {
-                            // lockr.set('location_id', response[0][0].id);
                             self._handleRedirect(response[0][0].id);
-                            // lockr.set('location_id', false);
-
                         });
                     },function(error) {
                             lockr.set('location_id', false);
@@ -414,7 +407,6 @@ define([
             if(config.locationState === 'manual') locationId = lockr.get('location_id');
             if(config.locationState === 'auto') locationId = this.state.locations;
             if (this._isReadyForSearch()) {
-                console.log('locationId:',locationId);
                 if(config.locationState === 'auto') { this._locationDetect() };
                 if ( locationId ) {
                     this._handleRedirect(locationId);
@@ -500,17 +492,6 @@ define([
                 fieldValues: fieldValues
                 , fieldNamesSelect : fieldNames
             });
-        },
-
-        _handleLocationSelect: function (locationId) {
-            lockr.set('location_id', locationId);
-            this._handleSubmit();
-        },
-
-        _handleLocationsClick: function(event) {
-            if (event) {
-                event.preventDefault();
-            }
         }
     }
 
