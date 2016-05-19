@@ -68,7 +68,7 @@ define([
         loadPostalLocations: function(postalCode) {
 
             return ajax.make({
-                url: 'http://maps.googleapis.com/maps/api/geocode/json?address='+postalCode,
+                url: 'http://maps.googleapis.com/maps/api/geocode/json?address='+postalCode+'&type=postal_code',
                 cache: true
             },true).then(function(response) {
                 return response;
